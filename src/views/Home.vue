@@ -1,18 +1,48 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header-fix></header-fix>
+    <div class="home_content">
+      <div>
+        
+      </div>
+    </div>
+    <footer-fix></footer-fix>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import { headerFix, footerFix } from '../components'
 export default {
   name: 'home',
+  data () {
+    return {
+
+    }
+  },
+  methods: {
+
+  },
   components: {
-    HelloWorld
+    headerFix,
+    footerFix
   }
+
 }
 </script>
+
+<style lang="scss">
+
+.home{
+  width: 100%;
+  min-width: 1025px;
+  height: 2000px;
+  background: url('../assets/bd_background.png') no-repeat;
+  background-size: 100%;
+  .home_content{
+    width: 1000px;
+    height: 500px;
+    margin: 15px auto 0;
+    background: #fff;
+  }
+}
+</style>
