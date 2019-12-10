@@ -80,7 +80,7 @@ export default {
 @import '../style/mixin';
 .footerfix{
     width: 1000px;
-    margin: 0 auto;
+    margin: 20px auto 0;
     .ft_friendLink{
         width:1000px;
         height: 32px;
