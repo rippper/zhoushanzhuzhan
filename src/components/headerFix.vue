@@ -3,17 +3,17 @@
       <div class="head_part">
         <div class="hp_Inner">
           <div class="hp_userlogin">
-            <div v-if="loginType == false">
+            <div v-if="!userInfo.Account">
               您好！欢迎来到舟山终身学习网!
-              <a class="ul_button" href="javascript:;">登录</a>
+              <router-link class="ul_button" to="/login">登录</router-link>
               <a class="ul_button" href="javascript:;">注册</a>
               <a class="hp_clickbtn" href="javascript:;">忘记密码</a>
             </div>
-            <div v-else-if="loginType == true">
+            <div v-else>
               您好！<span></span>欢迎来到舟山终身学习网；您目前的学分：<span></span>；学习币：<span></span>；您有0条通知！
               <a class="lo_clickbtn" href="javascript:;">个人中心</a> |
               <a class="lo_clickbtn" href="javascript:;">资料修改</a> |
-              <a class="lo_clickbtn" href="javascript:;">退出系统</a>
+              <a class="lo_clickbtn" href="javascript:;" @click="loginOut">退出系统</a>
             </div>
           </div>
           <div class="hp_setpart">
@@ -202,6 +202,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+import { LoginOut } from '../service/getData'
 export default {
     name: 'headerfix',
     data () {
@@ -238,6 +240,10 @@ export default {
       clearInterval(this.timerRobot)
     },
     methods: {
+      ...mapActions('UserLogin', [
+        'getUserInformation', 
+        'saveUserInfo'
+      ]),
       bannerTo () {
         this.bannerIndex = ++this.bannerIndex
         this.bannerIndex > 3 ? this.bannerIndex = 0 : this.bannerIndex
@@ -253,7 +259,20 @@ export default {
         this.year = date.getFullYear()
         this.mouth = date.getMonth() + 1
         this.day = date.getDate()
+      },
+      async loginOut () {
+        let data = await LoginOut()
+        if (data.Type == 1) {
+          this.saveUserInfo({})
+          window.localStorage.removeItem('ASPXAUTH')
+          window.localStorage.removeItem('userInfo')
+        }
       }
+    },
+    computed: {
+      ...mapState({
+        userInfo: (state) => state.UserLogin.userInfo
+      })
     }
 }
 </script>

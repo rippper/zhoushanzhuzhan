@@ -44,6 +44,9 @@ export default {
             a{
                 font-size: 12px;
                 font-family: "黑体", "Arial Narrow";
+                &:hover{
+                    color: #f00;
+                }
             }
         }
     }

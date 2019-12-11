@@ -98,11 +98,11 @@
             </div>
           </div>
           <div class="videoSource">
-            <a href="javascript:;">
+            <a href="http://www.zsxxnet.cn/video.htm" target="_blank">
               <img src="../assets/yingxiangzl.jpg" alt="">
             </a>
           </div>
-          <div class="rnakingList">
+          <div class="rankingList">
             <div class="ranklist_title">
               <div class="rt_left">排行榜</div>
               <div class="rt_right">
@@ -111,11 +111,81 @@
                 <span class="rank_titlebtn"><a href="javascript:;" :class="{ 'rank_active': rankType == 2 }" @mouseenter="rankTypeChange(2)">课程排行</a></span>
               </div>
             </div>
-            <div>
-
+            <div class="ranklist_content">
+              <ul>
+                <li v-show="rankType == 0">
+                  <div class="ranklist_contable_title">
+                    <div class="ranklist_ct_rank">排名</div>
+                    <div class="ranklist_ct_socityname">社区名称</div>
+                    <div class="ranklist_ct_score">学分</div>
+                  </div>
+                  <div class="ranklist_contable_list">
+                    <ul>
+                      <li v-for="(item, index) in socityRank" :key="index">
+                        <div class="ranklist_cc_rank"><span :class="{ 'top_item': index < 3 }" v-text="item.Ranks"></span></div>
+                        <div class="ranklist_cc_socityname" v-text="item.socityName"></div>
+                        <div class="ranklist_cc_score" v-text="item.studyScore"></div>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li v-show="rankType == 1">
+                  <div class="ranklist_contable_title">
+                    <div class="ranklist_ct_rank">排名</div>
+                    <div class="ranklist_ct_socityname">学校名称</div>
+                    <div class="ranklist_ct_score">人数</div>
+                  </div>
+                  <div class="ranklist_contable_list">
+                    <ul>
+                      <li v-for="(item, index) in schoolRank" :key="index">
+                        <div class="ranklist_cc_rank"><span :class="{ 'top_item': index < 3 }" v-text="item.Ranks"></span></div>
+                        <div class="ranklist_cc_socityname" v-text="item.schoolName"></div>
+                        <div class="ranklist_cc_score" v-text="item.schoolPeople"></div>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li v-show="rankType == 2">
+                  <div class="ranklist_contable_title">
+                    <div class="ranklist_ct_rank">排名</div>
+                    <div class="ranklist_ct_socityname">课程名称</div>
+                    <div class="ranklist_ct_score">次数</div>
+                  </div>
+                  <div class="ranklist_contable_list">
+                    <ul>
+                      <li v-for="(item, index) in courseRank" :key="index">
+                        <div class="ranklist_cc_rank"><span :class="{ 'top_item': index < 3 }" v-text="item.Ranks"></span></div>
+                        <div class="ranklist_cc_socityname" v-text="item.courseName"></div>
+                        <div class="ranklist_cc_score" v-text="item.times"></div>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
-          <div class="teacherList"></div>
+          <div class="teachersList">
+            <div class="teachersList_title">
+              <div class="home_tt_left">名师风采</div>
+              <div class="home_tt_right">
+                <a href="javascript:;">
+                  <img src="../assets/cg_more.png" alt="">
+                </a>
+              </div>
+            </div>
+            <div class="teachersList_content">
+              <div></div>
+              <ul>
+                <li>
+                  <a href="javascript:;">
+                    <img src="" alt="">
+                    <p></p>
+                  </a>
+                </li>
+              </ul>
+              <div></div>
+            </div>
+          </div>
           <div class="conveniencePeople">
             <div class="cpe_title">便民服务</div>
             <div class="cpe_content">
@@ -150,6 +220,7 @@
           </ul>
         </div>
       </div>
+      <!-- 底部 -->
       <div class="home_ad">
           <ul>
               <li :class="{'ad_action': item.jugment}" v-for="(item, index) in advpart" :key="index">
@@ -210,6 +281,7 @@
 
 <script>
 import { headerFix, footerFix, homeMessageBox } from '../components'
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'home',
   data () {
@@ -461,7 +533,50 @@ export default {
           Author: '余显定'
         }
       ],
-      rollpartRobot: ''
+      rollpartRobot: '',
+      socityRank: [
+        {
+          Ranks: 1,
+          socityName: '中湾社区',
+          studyScore: 100000
+        }
+      ],
+      schoolRank: [
+        {
+          Ranks: 1,
+          schoolName: '新城学校',
+          schoolPeople: 1000
+        }
+      ],
+      courseRank: [
+        {
+          Ranks: 1,
+          courseName: '打电话',
+          times: 1770
+        }
+      ],
+      teacherList: [
+        {
+          Img: require('../assets/teacher1.jpg'),
+          Name: '陈乃林'
+        },
+        {
+          Img: require('../assets/teacher2.jpg'),
+          Name: '叶忠海'
+        },
+        {
+          Img: require('../assets/teacher3.jpg'),
+          Name: '邵志华'
+        },
+        {
+          Img: require('../assets/teacher4.jpg'),
+          Name: '杜峥嵘'
+        },
+        {
+          Img: require('../assets/teacher5.jpg'),
+          Name: '陈  默'
+        },
+      ]
     }
   },
   mounted () {
@@ -530,6 +645,7 @@ export default {
   min-width: 1025px;
   margin: 0 auto;
   background: url('../assets/bd_background.png') no-repeat;
+  background-color: #fff;
   background-size: 100%;
   .home_content{
     width: 1000px;
@@ -740,7 +856,7 @@ export default {
             }
           }
         }
-        .rnakingList{
+        .rankingList{
           .ranklist_title{
             height: 33px;
             margin-top: 10px;
@@ -782,9 +898,104 @@ export default {
               }
             }
           }
-        }
-        .teacherList{
+          .ranklist_content{
+            width: 280px;
+            height: 180px;
+            ul{
+              width:268px;
+              margin: 0 auto;
+              li{
+                .ranklist_contable_title{
+                  margin-top: 6px;
+                  margin-bottom: 6px;
+                  border-bottom: 1px solid #1e82d2;
+                  @extend %clearFix;
+                  div{
+                    float:left;
+                    height:24px;
+                    line-height: 24px;
+                    text-align: center;
+                    font-size: 12px;
+                  }
+                  .ranklist_ct_rank{
+                    width: 15%;
+                  }
+                  .ranklist_ct_socityname{
+                    width: 65%;
+                  }
+                  .ranklist_ct_score{
+                    width: 20%;
+                  }
+                }
+                .ranklist_contable_list{
+                  font-size: 12px;
+                  ul{
+                    li{
+                      @extend %clearFix;
+                      div{
+                        float:left;
+                        height: 22px;
+                        text-align: center;
+                      }
+                      .ranklist_cc_rank{
+                        width: 15%;
+                        position: relative;
+                        span{
+                          width:20px;
+                          height:13px;
+                          line-height: 14px;
+                          margin: auto;
+                          background: #888;
+                          font-family: Arial, Helvetica, sans-serif;
+                          color: #fff;
+                          display: inline-block;
+                          position: absolute;
+                          top: 0;
+                          right: 0;
+                          bottom: 0;
+                          left: 0;
+                        }
+                        .top_item{
+                          background: #1e82a0;
+                        }
+                      }
 
+                      .ranklist_cc_socityname{
+                        width: 65%;
+                        line-height: 22px;
+                      }
+                      .ranklist_cc_score{
+                        width: 20%;
+                        line-height: 22px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .teachersList{
+          width:280px;
+          height:145px;
+          border: 1px solid #e5e5e5;
+          .teachersList_title{
+            height: 33px;
+            line-height: 33px;
+            background-color: #f7f7f7;
+            @extend %clearFix;
+            .home_tt_left{
+              float: left;
+              background: url('../assets/title_jt.png') no-repeat 10px 50%;
+              padding-left: 26px;
+              font-weight: bold;
+              color: #1e82d2;
+            }
+            .home_tt_right{
+              float: right;
+              padding-right: 8px;
+            }
+          }
         }
         .conveniencePeople{
           background: #fff;
