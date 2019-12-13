@@ -538,21 +538,96 @@ export default {
         {
           Ranks: 1,
           socityName: '中湾社区',
-          studyScore: 100000
+          studyScore: 59383
+        },
+        {
+          Ranks: 2,
+          socityName: '桃湾社区',
+          studyScore: 41186
+        },
+        {
+          Ranks: 3,
+          socityName: '大岙二村',
+          studyScore: 29041
+        },
+        {
+          Ranks: 4,
+          socityName: '绿岛社区',
+          studyScore: 24041
+        },
+        {
+          Ranks: 5,
+          socityName: '嘉和社区',
+          studyScore: 22049
+        },
+        {
+          Ranks: 6,
+          socityName: '舟山社区大学',
+          studyScore: 14041
         }
       ],
       schoolRank: [
         {
           Ranks: 1,
           schoolName: '新城学校',
-          schoolPeople: 1000
-        }
+          schoolPeople: 7882
+        },
+        {
+          Ranks: 2,
+          schoolName: '定海区二中集团北校区',
+          schoolPeople: 1694
+        },
+        {
+          Ranks: 3,
+          schoolName: '定海小学',
+          schoolPeople: 1638
+        },
+        {
+          Ranks: 4,
+          schoolName: '舟山市普陀区沈家门小学',
+          schoolPeople: 1601
+        },
+        {
+          Ranks: 5,
+          schoolName: '舟山市第二小学',
+          schoolPeople: 1268
+        },
+        {
+          Ranks: 6,
+          schoolName: '舟山市普陀区六横镇中心小学',
+          schoolPeople: 1222
+        },
       ],
       courseRank: [
         {
           Ranks: 1,
           courseName: '打电话',
           times: 1770
+        },
+        {
+          Ranks: 2,
+          courseName: '亲历两蒋日记到美国',
+          times: 1730
+        },
+        {
+          Ranks: 3,
+          courseName: '谈礼仪（01）礼仪就在你身边',
+          times: 1410
+        },
+        {
+          Ranks: 4,
+          courseName: '上海人过冬天',
+          times: 1360
+        },
+        {
+          Ranks: 5,
+          courseName: '《诗经》的现代解读',
+          times: 863
+        },
+        {
+          Ranks: 6,
+          courseName: '家家有本育儿经',
+          times: 844
         }
       ],
       teacherList: [

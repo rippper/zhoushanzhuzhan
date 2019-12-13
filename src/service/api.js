@@ -5,12 +5,20 @@
 const API_URL = '/api'
 const Pages = '/pages'
 const User = '/User'
+const Home = '/Home'
+const Course = '/Course'
 const CourseProcess = '/CourseProcess'
+const Article = '/article'
 // const Collection = '/Collection'
 export default {
   // 检查用户登录状态
   Authorization: {
     url: API_URL + Pages + '/Authorization',
+    data: {}
+  },
+  // 保持用户在线状态
+  KeepOnline: {
+    url: API_URL + User + '/KeepOnline',
     data: {}
   },
   // 获取用户信息
@@ -38,4 +46,94 @@ export default {
     url: API_URL + User + '/LoginOut',
     data: {}
   },
+  // 课程分类-左侧导航 
+  CourseCategory: {
+    url: API_URL + Course + '/CourseCategory',
+    data: {}
+  },
+  // 课程中心课程列表
+  CourseList: {
+    url: API_URL + Course + '/CourseList',
+    data: {}
+  },
+  // 课程内容
+  CourseContent: {
+    url: API_URL + Course + '/CourseContent',
+    data: {}
+  },
+  // 获取课程视频的内容
+  Play: {
+    url: API_URL + Home + '/Play',
+    data: {}
+  },
+  // 获取精英课程-三分屏课程的信息
+  PlayJY: {
+    url: API_URL + Home + '/PlayJY',
+    data: {}
+  },
+  // 获取MP4视频数据
+  PlayJwplay: {
+    url: API_URL + Home + '/PlayJwplay',
+    data: {}
+  },
+  // 课程播放页评论
+  CourseComment2: {
+    url: API_URL + '/Page' + '/CourseComment',
+    data: {}
+  },
+  // 课程播放页添加笔记
+  AddNote: {
+    url: API_URL + '/Page' + '/AddNote',
+    data: {}
+  },
+  // 防伪造请求
+  AntiForgeryToken: {
+    url: API_URL + '/Page' + '/AntiForgeryToken',
+    data: {}
+  },
+  // 课程播放页删除笔记
+  DelNote: {
+    url: API_URL + Course + '/DelNote',
+    data: {}
+  },
+  // 课程播放页添加评论
+  CourseCommentAdd: {
+    url: API_URL + '/Page' + '/CourseCommentAdd',
+    data: {}
+  },
+  // Refresh接口
+  Refresh: {
+    url: API_URL + '/CourseProcess' + '/Refresh',
+    data: {}
+  },
+  // 查看收藏
+  FavoriteExist: {
+    url: API_URL + User + '/FavoriteExist',
+    data: { }
+  },
+  // 添加收藏
+  FavoriteAdd: {
+    url: API_URL + User + '/FavoriteAdd',
+    data: {}
+  },
+  // 取消收藏
+  FavoriteDelete: {
+    url: API_URL + User + '/FavoriteDelete',
+    data: {}
+  },
+  // 获取文章频道列表信息
+  GetArticleChannelInfoList: {
+    url: API_URL + Article + '/GetArticleChannelInfoList',
+    data: {}
+  },
+  // 获取文章频道列表信息
+  NoticeCategory: {
+    url: API_URL + Article + '/NoticeCategory',
+    data: {}
+  },
+  // 首页新闻轮播-学习展示-地方动态
+  GetArticleInfoList: {
+    url: API_URL + Article + '/GetArticleInfoList',
+    data: {}
+  }
 }

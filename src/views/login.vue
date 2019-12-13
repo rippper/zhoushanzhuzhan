@@ -99,7 +99,6 @@ export default {
         async generateCode () {
            let data = GenerateCode()
            if (data.IsSuccess) {
-             console.log(1)
             //  设计图暂无验证码功能
            }
         },
@@ -208,9 +207,6 @@ export default {
                     .el-tabs__nav-scroll{
                         .el-tabs__nav{
                             margin-left: 26px;
-                        }
-                        .is-top{
-                        // width: 108px!important;
                         }
                         .el-tabs__item{
                             font-size: 16px;

@@ -10,7 +10,7 @@
               <a class="hp_clickbtn" href="javascript:;">忘记密码</a>
             </div>
             <div v-else>
-              您好！<span></span>欢迎来到舟山终身学习网；您目前的学分：<span></span>；学习币：<span></span>；您有0条通知！
+              您好！<span v-text="userInfo.Account"></span>欢迎来到舟山终身学习网；您目前的学分：<span></span>；学习币：<span></span>；您有0条通知！
               <a class="lo_clickbtn" href="javascript:;">个人中心</a> |
               <a class="lo_clickbtn" href="javascript:;">资料修改</a> |
               <a class="lo_clickbtn" href="javascript:;" @click="loginOut">退出系统</a>
@@ -39,7 +39,7 @@
             <router-link to="/">网站首页</router-link>
           </li>
           <li>
-            <router-link to="/">新闻信息</router-link>
+            <router-link to="/newslist">新闻信息</router-link>
             <ul>
               <li>
                 <router-link to="/">通知公告</router-link>
@@ -53,7 +53,7 @@
             </ul>
           </li>
           <li>
-            <router-link to="/">课程中心</router-link>
+            <router-link to="/courselist">课程中心</router-link>
             <ul>
               <li>
                 <router-link to="/">老年教育</router-link>
@@ -266,6 +266,9 @@ export default {
           this.saveUserInfo({})
           window.localStorage.removeItem('ASPXAUTH')
           window.localStorage.removeItem('userInfo')
+        }
+        if (!this.$route.meta.isSkip) {
+          this.$router.push({ path: '/login' })
         }
       }
     },

@@ -53,6 +53,7 @@ function checkStatus (response) {
         var currentUrl = window.localStorage.getItem('currentUrl')
         // console.log(currentUrl, 111)
         window.localStorage.removeItem('ASPXAUTH')
+        window.localStorage.removeItem('userInfo')
         let UA = userAgent()
         if (UA.ios) {
           if (window.webkit && !window.hasNotifyLogout) {
@@ -75,8 +76,8 @@ function checkStatus (response) {
           window.location.href = getPCUrl('#/login?currentUrl' + encodeURIComponent(currentUrl))
         } else {
           Message('账号掉线，请重新登录')
-          window.location.href = `/${pathname}/#/login?currentUrl=${encodeURIComponent(
-            currentUrl)}`
+          window.location.href = `/#/login?currentUrl=${encodeURIComponent(currentUrl)}`
+          // window.location.href = `/${pathname}/#/login?currentUrl=${encodeURIComponent(currentUrl)}`
         }
       } else if (response.data.Type !== 1 && response.status !== 200) {
         console.warn(`status:${response.status},statusText:${response.statusText}`)
