@@ -928,10 +928,6 @@ export default {
                                 line-height: 28px;
                                 font-weight: normal;
                             }
-                            .text{
-                            }
-                            .rate{
-                            }
                             .progress{
                                 padding: 5px 0;
                                 .el-progress-bar__outer{
@@ -1107,8 +1103,6 @@ export default {
                         }
                     }
                 } 
-            }
-            .el-dialog__footer{
             }
         }
     }
