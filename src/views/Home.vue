@@ -1,6 +1,10 @@
 <template>
   <div class="home">
     <header-fix></header-fix>
+    <div class="home_floatBox" ref="floatBox">
+      <img src="../assets/codepic.jpg" alt="">
+      <p>舟山社区教育公众号</p>
+    </div>
     <div class="home_content">
       <!-- 顶部 -->
       <div class="top_part">
@@ -651,7 +655,8 @@ export default {
           Img: require('../assets/teacher5.jpg'),
           Name: '陈  默'
         },
-      ]
+      ],
+      timer: ''
     }
   },
   mounted () {
@@ -660,10 +665,12 @@ export default {
       this.adChange(this.adIndex)
     }, 5000)
     this.rollStart()
+    window.addEventListener('scroll', this.getDistance)
   },
   beforeDestroy () {
     clearInterval(this.advRobot)
     clearInterval(this.rollpartRobot)
+    window.removeEventListener('scroll', this.getDistance)
   },
   methods: {
     change (now, pre) {
@@ -702,6 +709,35 @@ export default {
               this.$refs.rollpart.style.left = '0px'
           }
       }, 30)
+    },
+    round (currentDistance, totalDistance) {
+      if (totalDistance - currentDistance >= 0) {
+          let sum = Math.ceil((totalDistance - currentDistance) / 20)
+          return sum
+      } else if (totalDistance - currentDistance < 0) {
+          let sum = Math.ceil((totalDistance - currentDistance) / -20)
+          return sum
+      }
+    },
+    getDistance () {
+      let self = this
+      clearInterval(self.timer)
+      this.timer = setInterval(() => {
+        let totalDistance = document.documentElement.scrollTop + 156
+        let currentDistance = self.$refs.floatBox.offsetTop
+        let speed = self.round(currentDistance, totalDistance)
+        if (totalDistance > currentDistance) {
+          self.$refs.floatBox.style.top = self.$refs.floatBox.offsetTop + speed + 'px'
+
+        } else if (totalDistance < currentDistance) {
+          self.$refs.floatBox.style.top = self.$refs.floatBox.offsetTop - speed + 'px'
+        }
+        if (speed == 0) {
+          console.log(111)
+          self.$refs.floatBox.style.top = totalDistance + 'px'
+          clearInterval(self.timer)
+        }
+      }, 10)
     }
   },
   components: {
@@ -722,6 +758,28 @@ export default {
   background: url('../assets/bd_background.png') no-repeat;
   background-color: #fff;
   background-size: 100%;
+  position: relative;
+  .home_floatBox{
+    width: 113px;
+    height: 132px;
+    background: #fff;
+    border: 1px solid #CCC;
+    position: absolute;
+    top: 156px;
+    left: 20px;
+    overflow: hidden;
+    img{
+      width: 114px;
+    }
+    p{
+      height: 18px;
+      line-height: 18px;
+      color: #999;
+      font-size: 12px;
+      font-family: Arial Narrow;
+      text-align: center;
+    }
+  }
   .home_content{
     width: 1000px;
     margin: 15px auto 0;

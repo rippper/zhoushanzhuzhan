@@ -73,7 +73,7 @@ function checkStatus (response) {
         if (window.hasNotifyLogout) return // 如果是app内嵌页面，则掉线后不跳到登录页
         if (getStore('userAgent').weixin && isAllowWeiXin) {
           Message('账号掉线，请重新登录')
-          window.location.href = getPCUrl('#/login?currentUrl' + encodeURIComponent(currentUrl))
+          window.location.href = getPCUrl('/#/login?currentUrl' + encodeURIComponent(currentUrl))
         } else {
           Message('账号掉线，请重新登录')
           window.location.href = `/#/login?currentUrl=${encodeURIComponent(currentUrl)}`

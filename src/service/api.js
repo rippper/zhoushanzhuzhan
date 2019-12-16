@@ -135,5 +135,30 @@ export default {
   GetArticleInfoList: {
     url: API_URL + Article + '/GetArticleInfoList',
     data: {}
-  }
+  },
+  // 获取文章内容
+  ArticleContent: {
+    url: API_URL + Article + '/ArticleContent',
+    data: {}
+  },
+  // 记录已读 给积分
+  SetArticleRed: {
+    url: API_URL + Article + '/SetArticleRed',
+    data: {}
+  },
+  // 我的课程
+  MyCenter: {
+    url: API_URL + Course + '/MyCenter',
+    data: {}
+  },
+  // 记录mp4视频进度
+  SingleProcess: {
+    url: API_URL + '/CourseProcess' + '/SingleProcess',
+    data: {}
+  },
+  // 删除我的课程删除学习中的课程
+  DelUserCourseReg: {
+      url: API_URL + Course + '/DelUserCourseReg',
+      data: {}
+  } 
 }

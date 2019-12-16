@@ -34,18 +34,18 @@ const getLoginStatus = (currentUrl) => {
         })
       }, 60000)
     } else {
-      console.log(res.Type)
+      // console.log(res.Type)
       if (res.Type == 3) {
         MessageBox.confirm('在其他设备上已经登录', '', {
           confirmButtonText: '确定',
-          callback: router.push({ name: 'login', query: { currentUrl: currentUrl } })
+          callback: router.push({ path: '/login', query: { currentUrl: currentUrl } })
         })
       } else if (res.Type == 1) {
           router.push({ name: 'login', query: { currentUrl: currentUrl } })
       } else if (res.Type == 9) {
         MessageBox.confirm('在其他平台登录或被其他人登录', '', {
           confirmButtonText: '确定',
-          callback: router.push({ name: 'Login', query: { currentUrl: currentUrl } })
+          callback: router.push({ path: '/login', query: { currentUrl: currentUrl } })
         })
       } else if (res.Type == 10) {
         MessageBox.confirm('您还不是本平台会员，将前往您所在的平台' + ':' + res.Message, '', {
@@ -57,14 +57,14 @@ const getLoginStatus = (currentUrl) => {
         window.localStorage.removeItem('userInfo')
         MessageBox.confirm('过期了', '', {
           confirmButtonText: '确定',
-          callback: router.push({ name: 'Login', query: { currentUrl: currentUrl } })
+          callback: router.push({ path: '/login', query: { currentUrl: currentUrl } })
         })
       } else if (res.Type == 13) {
         store.dispatch('saveUserInfo', {})
         window.localStorage.removeItem('userInfo')
         MessageBox.confirm(res.Message, '', {
           confirmButtonText: '确定',
-          callback: router.push({ name: 'Login', query: { currentUrl: currentUrl } })
+          callback: router.push({ path: '/login', query: { currentUrl: currentUrl } })
         })
       } else if (res.Type == 15) {
         MessageBox.confirm(res.Type + ':' + res.Message, '', {

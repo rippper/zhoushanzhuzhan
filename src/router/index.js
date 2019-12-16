@@ -7,7 +7,9 @@ import CourseDetail from '../views/CourseDetail.vue'
 import playSC from '../views/playSC.vue'
 import NewsDetail from '../views/NewsDetail.vue'
 import NewsList from '../views/NewsList.vue'
-
+import PersonalCenter from '../views/PersonalCenter.vue'
+import PersonalClass from '../views/PersonalClass.vue'
+import PersonalMyCourse from '../views/PersonalMyCourse.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -52,6 +54,30 @@ const routes = [
     name: 'newsdetail',
     meta: { title: '新闻详情' },
     component: NewsDetail
+  },
+  {
+    path: '/personalcenter',
+    name: 'personalcenter',
+    meta: { title: '个人中心' },
+    component: PersonalCenter,
+    redirect: '/personalcenter/personClass',
+    children: [
+      {
+        name: 'personClass',
+        path: 'personClass',
+        component: PersonalClass,
+        meta: { title: '我的课程' },
+        redirect: '/personalcenter/personclass/personalmycourse',
+        children: [
+          {
+            name: 'personalmycourse',
+            meta: { title: '个人中心-我的课程' },
+            path: 'personalmycourse',
+            component: PersonalMyCourse
+          }
+        ]
+      }
+    ]
   }
 ]
 

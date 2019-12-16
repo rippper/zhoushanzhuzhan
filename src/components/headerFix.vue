@@ -11,7 +11,7 @@
             </div>
             <div v-else>
               您好！<span v-text="userInfo.Account"></span>欢迎来到舟山终身学习网；您目前的学分：<span></span>；学习币：<span></span>；您有0条通知！
-              <a class="lo_clickbtn" href="javascript:;">个人中心</a> |
+              <router-link class="lo_clickbtn" to="/personalcenter">个人中心</router-link> |
               <a class="lo_clickbtn" href="javascript:;">资料修改</a> |
               <a class="lo_clickbtn" href="javascript:;" @click="loginOut">退出系统</a>
             </div>

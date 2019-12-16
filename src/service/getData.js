@@ -117,10 +117,35 @@ export const GetArticleChannelInfoList = (data) => fetch.post(Api.GetArticleChan
 export const NoticeCategory = (data) => fetch.post(Api.NoticeCategory.url,
   { ...Api.NoticeCategory.data, ...data })
 /**
- *首页通知公告
+ * 首页通知公告
  */
 export const GetArticleInfoList = (data) => fetch.post(Api.GetArticleInfoList.url,
   { ...Api.GetArticleInfoList.data, ...data })
+/**
+ * 文章内容
+ */
+export const ArticleContent = (data) => fetch.post(Api.ArticleContent.url,
+  { ...Api.ArticleContent.data, ...data })
+/**
+ * 记录已读
+ */
+export const SetArticleRed = (data) => fetch.post(Api.SetArticleRed.url,
+  { ...Api.SetArticleRed.data, ...data })
+/**
+ * 我的课程
+ */
+export const MyCenter = (data) => fetch.post(Api.MyCenter.url,
+  { ...Api.MyCenter.data, ...data })
+/**
+ * 我的课程删除学习中的课程
+ */
+export const DelUserCourseReg = (data) => fetch.post(Api.DelUserCourseReg.url,
+  { ...Api.DelUserCourseReg.url, ...data })
+/**
+ * 记录mp4视频进度
+ */
+export const SingleProcess = (data) => fetch.post(Api.SingleProcess.url,
+  { ...Api.SingleProcess.data, ...data })
 /* 将所有的API封装起来 */
 const allApi = {}
 for (let key in Api) {

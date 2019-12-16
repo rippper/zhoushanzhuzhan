@@ -122,10 +122,12 @@ export default {
     },
     methods: {
         flChannelClick (item, menu) {
+            this.ctitle = item.text
             this.$router.push({ path: '/courselist', query: { title: this.ctitle } })
         },
         slChannelClick (items, item, menu) {
             this.channelId = items.id
+            console.log(this.channelId)
             this.ctitle = item.text
             this.$router.push({ path: '/courselist', query: { title: this.ctitle, channelId: this.channelId } })
         },
@@ -154,7 +156,7 @@ export default {
                 return item
             })
             this.channelList = courseCate.ListData
-            console.log(this.channelList)
+            // console.log(this.channelList)
         },
         async getFavoriteDelete () {
             let data = await FavoriteDelete({ ids: [this.id], type: 'Course' })
