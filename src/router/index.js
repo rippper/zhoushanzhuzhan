@@ -10,7 +10,19 @@ import NewsList from '../views/NewsList.vue'
 import PersonalCenter from '../views/PersonalCenter.vue'
 import PersonalClass from '../views/PersonalClass.vue'
 import PersonalMyCourse from '../views/PersonalMyCourse.vue'
+import PersonalCollect from '../views/PersonalCollect.vue'
+import PersonalColCourse from '../views/PersonalColCourse.vue'
+import PersonalColNews from '../views/PersonalColNews.vue'
+import PersonalNote from '../views/PersonalNote.vue'
 Vue.use(VueRouter)
+
+/**
+ * 重写路由的push方法,防止出现相同路径路由时报错
+ */
+const routerPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error => error)
+}
 
 const routes = [
   {
@@ -67,15 +79,42 @@ const routes = [
         path: 'personClass',
         component: PersonalClass,
         meta: { title: '我的课程' },
-        redirect: '/personalcenter/personclass/personalmycourse',
+        redirect: 'personclass/personalmycourse',
         children: [
           {
             name: 'personalmycourse',
-            meta: { title: '个人中心-我的课程' },
+            meta: { title: '我的课程-正在学习的课程' },
             path: 'personalmycourse',
             component: PersonalMyCourse
           }
         ]
+      },
+      {
+        name: 'personalcollect',
+        path: 'personalcollect',
+        component: PersonalCollect,
+        meta: { title: '我的收藏' },
+        redirect: 'personalcollect/personalcolcourse',
+        children: [
+          {
+            name: 'personalcolcourse',
+            path: 'personalcolcourse',
+            component: PersonalColCourse,
+            meta: { title: '我的收藏-课程收藏' }
+          },
+          {
+            name: 'personalcolnews',
+            path: 'personalcolnews',
+            component: PersonalColNews,
+            meta: { title: '我的收藏-文章收藏' }
+          }
+        ]
+      },
+      {
+        name: 'personalnote',
+        path: 'personalnote',
+        component: PersonalNote,
+        meta: { title: '我的笔记' }
       }
     ]
   }

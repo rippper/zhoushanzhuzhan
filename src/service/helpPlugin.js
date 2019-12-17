@@ -2,7 +2,7 @@
  *  字数限制
  */
 export const wordsL = (content, limtnum) => { // 总共两个字content为要测算的字符串长度，limtnum为需要限制的长度
-    return content.length > limtnum ? content.substr(0, limtnum) + '..' : content
+    return content.length > limtnum ? content.substr(0, limtnum) + '...' : content
 }
 
 /*

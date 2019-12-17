@@ -1,5 +1,97 @@
 <template>
-    <div class="personalCenter">
+    <div class="personalCenter" ref="personal_container">
+        <div class="personal_backgroundshadow" v-show="perWindow" @click.self="checkFinish()">
+            <div class="personal_notechangebox" v-show="perNoteBox">
+                <div class="personal_notechangetop">
+                <img src="../assets/per-rewritewhite.png" alt="">
+                <span>修改笔记</span>
+                </div>
+                <div class="personal_lesson clearFix">
+                <span class="personal_redicon"></span>
+                <span>课程:</span>
+                <span v-text="perNoteForLesson"></span>
+                </div>
+                <div class="personal_notechange">
+                <p>
+                    笔记<span>标题</span>
+                    <span class="personal_notechange_titlelimit"><span v-text="noteLabel_forChange.length" ref="waringtitle"></span>/25</span>
+                </p>
+                <input type="text" v-model="noteLabel_forChange" ref="noteLabel" @input="wordsLimit('noteLabel_forChange','waringtitle', 25)">
+                <p>
+                    笔记<span>正文</span>
+                    <span class="personal_notechange_contentlimit"><span v-text="noteInfor_forChange.length" ref="waringcontent"></span>/250</span>
+                </p>
+                <textarea cols="30" rows="10" v-model="noteInfor_forChange" ref="noteContent" @input="wordsLimit('noteInfor_forChange', 'waringcontent', 250)"></textarea>
+                </div>
+                <div class="personal_buttondepart">
+                <button class="personal_reslove" type="button" @click="noteSubmit()">确认</button>
+                <button class="personal_reject" type="button" @click.self="checkFinish()">取消</button>
+                </div>
+            </div>
+            <div class="personal_planchangebox" v-if="perPlanBox">
+                <div class="personal_planchangetop">
+                <img src="../assets/per-rewritewhite.png" alt="">
+                <span><span v-text="planAddOrChange"></span>计划</span>
+                </div>
+                <div class="personal_planchangebody">
+                <p class="personal_coursename">课程<span>名称</span></p>
+                <div class="personal_coursebox">
+                    <span class="personal_courseinname" v-text="planCourseName"></span>
+                    <div class="personal_counameright">
+                    <span class="personal_starname"><span class="personal_courseimg"></span>学分：</span><span v-text="planCredit"></span>
+                    <button type="button" class="personal_gostudy" @click="linkToCourse(planCourseID)">去学习</button>
+                    </div>
+                </div>
+                <p class="personal_coursename">学习<span>计划</span></p>
+                <div>
+                    <span class="personal_plandata">计划开始日期：</span>
+                    <el-date-picker
+                    v-model="planStartTime_forChange"
+                    type="date"
+                    ref="planStartTime"
+                    popper-class="start_time"
+                    placeholder="选择日期">
+                    </el-date-picker>
+                    <span class="personal_plandata">计划完成日期：</span>
+                    <el-date-picker
+                    v-model="planFinishTime_forChange"
+                    type="date"
+                    ref="planEndTime"
+                    popper-class="finish_time"
+                    placeholder="选择日期">
+                    </el-date-picker>
+                </div>
+                <div class="personal_attention">
+                    <div class="personal_attentiontime">
+                    <p class="personal_coursename">提醒<span>周期</span></p>
+                    <div>
+                        <img src="../assets/per-checkout.png" alt="" v-show="planAwakePeriod == 1 ? 1 : 0" @click="SET_PLANAWAKEPERIOD(0)">
+                        <img src="../assets/per-check.png" alt="" v-show="planAwakePeriod == 0 ? 1 : 0">
+                        <span>每天提醒</span>
+                        <img src="../assets/per-checkout.png" alt="" v-show="planAwakePeriod == 0 ? 1 : 0" @click="SET_PLANAWAKEPERIOD(1)">
+                        <img src="../assets/per-check.png" alt="" v-show="planAwakePeriod == 1 ? 1 : 0">
+                        <span>每周提醒</span>
+                    </div>
+                    </div>
+                    <div class="personal_attentionway">
+                    <p class="personal_coursename">提醒<span>方式</span></p>
+                    <div>
+                        <img src="../assets/per-checkout.png" alt="" v-show="planAwakeWay == 1 ? 1 : 0">
+                        <img src="../assets/per-check.png" alt="" v-show="planAwakeWay == 0 ? 1 : 0">
+                        <span>站内信</span>
+                    </div>
+                    </div>
+                </div>
+                <div class="personal_buttonpart">
+                    <div class="personal_toright">
+                    <button type="button" @click="planSubmit()">提交</button>
+                    <button type="button" @click="checkFinish()">取消</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <headUpload v-show="perHeadBox" :refleash="render"></headUpload>
+        </div>
         <header-fix></header-fix>
         <div class="personal_Content">
             <div class="personal_top clearFix">
@@ -88,8 +180,9 @@
 </template>
 
 <script>
-import { headerFix, footerFix } from '../components'
-import { GetUserInfo } from '../service/getData'
+import { headerFix, footerFix, headUpload } from '../components'
+import { GetUserInfo, StudyPlanUpdate, StudyPlanAdd, NoteUpdatePost } from '../service/getData'
+import { mapState, mapMutations } from 'vuex'
 export default {
     name: 'PersonalCenter',
     data () {
@@ -97,9 +190,10 @@ export default {
             perHeadAddress: '',
             perInfor: {},
             perLaberN: [0, 0],
+            planAwakeWay: 0,
             perLabel: [
                 {
-                    perLinkAddress: '/personalCenter/personClass',
+                    perLinkAddress: '/personalCenter/personclass',
                     perTab: '我的课程'
                 },
                 {
@@ -107,24 +201,16 @@ export default {
                     perTab: '课程计划'
                 },
                 {
-                    perLinkAddress: '/personalCenter/personCollect/',
+                    perLinkAddress: '/personalCenter/personalcollect',
                     perTab: '我的收藏'
                 },
                 {
-                    perLinkAddress: '/personalCenter/studyNote',
+                    perLinkAddress: '/personalCenter/personalnote',
                     perTab: '学习笔记'
-                },
-                {
-                    perLinkAddress: '/personalCenter/personalRanks',
-                    perTab: '学习排名'
                 },
                 {
                     perLinkAddress: '/personalCenter/personalStudyFile',
                     perTab: '学习档案'
-                },
-                {
-                    perLinkAddress: '/personalCenter/personalTestCenter',
-                    perTab: '考试中心'
                 },
                 {
                     perLinkAddress: '/personalCenter/personalmyexam',
@@ -137,6 +223,7 @@ export default {
         this.render()
     },
     methods: {
+        ...mapMutations('PersonalCenter', ['SET_PERSONWINDOW_DISAPPEAR', 'SET_PLANSTARTTIME', 'SET_PLANFINISHTIME', 'SET_PLANAWAKEPERIOD', 'SET_NOTELABEL', 'SET_NOTEINFOR', 'OPEN_BOXSHADOW_APPEAR', 'SET_HEADCHANGE_APPEAR']),
         linkStyle (indexnum) {
             this.perLaberN = [0, 0]
             this.$refs.perPassword.style.color = '#d1d1d1' 
@@ -157,15 +244,185 @@ export default {
         reloading () {
             this.render()
         },
+        wordsLimit (element, label, inforLength) {
+            if (this[element].length >= inforLength + 1) {
+                this.$refs[label].style.color = '#f00'
+            } else if (this[element].length < inforLength + 1) {
+                this.$refs[label].style.color = ''
+            }
+        },
+        stopmove (event) {
+            let evt = window.event || event
+            evt.preventDefault()
+        },
+        linkToCourse (courseId) {
+            const { href } = this.$router.resolve({ path: '/courseDetail', query: { id: courseId } })
+            window.open(href, '_blank')
+        },
+        checkFinish () {
+            this.$confirm('确定是否取消修改?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.SET_PERSONWINDOW_DISAPPEAR()
+            }).catch(() => {
+                return false
+            })
+        },
+        async planSubmit () {
+            if (this.planStartTime == null || this.planFinishTime == null) {
+                this.$message({
+                message: '请填写时间',
+                type: 'error'
+                })
+                return
+            }
+            let start = this.planStartTime.getTime()
+            let end = this.planFinishTime.getTime()
+            let awaketimes = null
+            if (start >= end) {
+                this.$message({
+                message: '您所选取的时间不对，请选取正确的时间！',
+                type: 'error'
+                })
+                return
+            }
+            this.planAwakePeriod == 0 ? awaketimes = '每天一次' : awaketimes = '每周一次'
+            if (this.planAddOrChange == '修改') {
+                let msg = await StudyPlanUpdate({
+                Id: this.planID,
+                CourseId: this.planCourseID,
+                RemindDate: this.planStartTime,
+                PlanFinishDate: this.planFinishTime,
+                RemindCycle: awaketimes
+                })
+                if (msg.Type == 1) {
+                this.$message({
+                    message: msg.Message,
+                    type: 'success'
+                })
+                this.SET_PERSONWINDOW_DISAPPEAR()
+                } else {
+                this.$message({
+                    message: msg.Message,
+                    type: 'error'
+                })
+                }
+            } else if (this.planAddOrChange == '添加') {
+                let msg = await StudyPlanAdd({
+                CourseId: this.planCourseID,
+                RemindDate: this.planStartTime,
+                PlanFinishDate: this.planFinishTime,
+                RemindCycle: awaketimes
+                })
+                if (msg.Message == '更新成功') {
+                this.$message({
+                    message: msg.Message,
+                    type: 'success'
+                })
+                this.SET_PERSONWINDOW_DISAPPEAR()
+                } else {
+                this.$message({
+                    message: msg.Message,
+                    type: 'error'
+                })
+                }
+            }
+            this.$refs['son'].render()
+        },
         async render () {
             let msg = await GetUserInfo()
             this.perHeadAddress = msg.Model.Avatar
             this.perInfor = msg.Model
+        },
+        async noteSubmit () {
+            if (this.pernoteLabel.length >= 26 || this.pernoteInfor.length >= 251) {
+                this.$message({
+                message: '您所输入的内容超过字段限制请编辑字段长度。',
+                type: 'warning'
+                })
+                return 
+            }
+            let changeInfor = await NoteUpdatePost({
+                Id: this.perNoteIndex,
+                Name: this.pernoteLabel,
+                Content: this.pernoteInfor
+            })
+            if (changeInfor.Type == 1) {
+                this.$message.success(changeInfor.Message)
+                this.SET_PERSONWINDOW_DISAPPEAR()
+                this.$refs['son'].render()
+            } else {
+                this.$message.error(changeInfor.Message)
+            }
+        }
+    },
+    computed: {
+        ...mapState('PersonalCenter', {
+            perWindow: state => state.perWindow,
+            perNoteBox: state => state.perNoteBox,
+            perPlanBox: state => state.perPlanBox,
+            pernoteLabel: state => state.pernoteLabel,
+            pernoteInfor: state => state.pernoteInfor,
+            perNoteForLesson: state => state.perNoteForLesson,
+            perNoteIndex: state => state.perNoteIndex,
+            planAddOrChange: state => state.planAddOrChange,
+            planID: state => state.planID,
+            planCourseID: state => state.planCourseID,
+            planCourseName: state => state.planCourseName,
+            planCredit: state => state.planCredit,
+            planStartTime: state => state.planStartTime,
+            planFinishTime: state => state.planFinishTime,
+            planAwakePeriod: state => state.planAwakePeriod,
+            perHeadBox: state => state.perHeadBox
+        }),
+        planStartTime_forChange: {
+            get () {
+                return this.planStartTime
+            },
+            set (value) {
+                this.SET_PLANSTARTTIME(value)
+            }
+        },
+        planFinishTime_forChange: {
+            get () {
+                return this.planFinishTime
+            },
+            set (value) {
+                this.SET_PLANFINISHTIME(value)
+            }
+        },
+        noteLabel_forChange: {
+            get () {
+                return this.pernoteLabel
+            },
+            set (value) {
+                this.SET_NOTELABEL(value)
+            }
+        },
+        noteInfor_forChange: {
+            get () {
+                return this.pernoteInfor
+            },
+            set (value) {
+                this.SET_NOTEINFOR(value)
+            }
+        }
+    },
+    watch: {
+        perWindow (newName, oldName) {
+            if (newName == true) {
+                this.$refs.personal_container.addEventListener('mousewheel', this.stopmove, true)
+            } else {
+                this.$refs.personal_container.removeEventListener('mousewheel', this.stopmove, true)
+            }
         }
     },
     components: {
         headerFix,
-        footerFix
+        footerFix,
+        headUpload
     }
 }
 </script>
@@ -174,6 +431,292 @@ export default {
 @import '../style/mixin';
 .personalCenter{
     background: url('../assets/bd_background.png') no-repeat;
+    .personal_backgroundshadow{
+        width:100%;
+        height:100%;
+        position: fixed;
+        background:rgba(0,0,0,0.3);
+        z-index: 100;
+
+        .personal_notechangebox{
+            width:630px;
+            height:579px;
+            position:absolute;
+            top:0;
+            right:0;
+            bottom:0;
+            left:0;
+            margin:auto;
+            background:#fff;
+
+            .personal_notechangetop{
+            height:48px;
+            background:#2e6ed0;
+            text-align: center;
+            line-height: 48px;
+
+            img{
+                position: relative;
+                bottom:2px;
+            }
+
+            span{
+                margin-left:8px;
+                font-size: 16px;
+                color:#fff;
+                font-weight: 500;
+            }
+            }
+
+            .personal_lesson{
+            height:64px;
+            background:#efefef;
+
+            span{
+                float: left;
+
+                &:nth-child(2){
+                width:56px;
+                height:24px;
+                margin-top: 19px;
+                margin-left:8px;
+                text-align: center;
+                font-size: 16px;
+                color:#fff;
+                border-radius: 3px;
+                background: #089ffa;
+
+                }
+
+                &:last-child{
+                margin-left: 8px;
+                line-height:64px;
+                color:#565656;
+                }
+            }
+            .personal_redicon{
+                width:18px;
+                height:23px;
+                margin-top:20px;
+                margin-left:30px;
+                background:url('../assets/per-noteimg1.jpg') no-repeat;
+            }
+            }
+
+            .personal_notechange{
+            width:570px;
+            height:361px;
+            margin:20px auto;
+
+            p{
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom:16px;
+                position: relative;
+                span{
+                color:#2e6ed0;
+                }
+                .personal_notechange_titlelimit{
+                position: absolute;
+                right: 5px;
+                }
+                .personal_notechange_contentlimit{
+                position: absolute;
+                right: 5px;
+                }
+            }
+
+            input{
+                width:568px;
+                height:38px;
+                border:1px solid #e9e9e9;
+                margin-bottom:20px;
+                padding:0 15px;
+                box-sizing: border-box;
+            }
+
+            textarea{
+                height:236px;
+                width:568px;
+                border:1px solid #e9e9e9;
+                padding:15px;
+                box-sizing: border-box;
+            }
+            }
+
+            .personal_buttondepart{
+
+            .personal_reslove{
+                margin-left:409px;
+                width:96px;
+                height:36px;
+                background:linear-gradient(to right,#58d7fb,#2cabfa);
+                border:none;
+                border-radius: 36px;
+                color:#fff;
+                font-size:16px;
+                font-weight: bold;
+                cursor:pointer;
+            }
+
+            .personal_reject{
+                margin-left:32px;
+                border:none;
+                font-size:16px;
+                font-weight: bold;
+                background:none;
+                cursor:pointer;
+            }
+            }
+        }
+        .personal_planchangebox{
+            width:630px;
+            height:434px;
+            position:absolute;
+            top:0;
+            right:0;
+            bottom:0;
+            left:0;
+            margin:auto;
+            background:#fff;
+            .personal_planchangetop{
+            height:48px;
+            background: #2e6ed0;
+            text-align: center;
+            line-height:48px;
+            color:#fff;
+            font-size: 16px;
+            img{
+                margin-right:5px;
+            }
+            }
+            .personal_planchangebody{
+            padding: 0 30px;
+            .personal_coursename{
+                margin-top:20px;
+                margin-bottom:15px;
+                font-size: 16px;
+                font-weight: bold;
+                color:#666;
+                span{
+                color: #2e6ed0;
+                }
+            }
+            .personal_coursebox{
+                @extend %clearFix;
+                height:56px;
+                background: #efefef;
+
+                &::before{
+                content:'';
+                display: inline-block;
+                vertical-align: middle;
+                height: 100%;
+                }
+
+                .personal_counameright{
+                height:56px;
+                margin-right:20px;
+                float:right;
+                &::before{
+                    content:'';
+                    display: inline-block;
+                    vertical-align: middle;
+                    height: 100%;
+                }
+                }
+                .personal_courseinname{
+                margin-right:20px;
+                margin-left:16px;
+                }
+                .personal_courseimg{
+                display: inline-block;
+                width:14px;
+                height:14px;
+                background:url('../assets/per-studystar.png');
+                position: relative;
+                top:3px;
+                margin-right: 6px;
+                }
+                .personal_starname{
+                color:#acacac;
+                }
+                .personal_gostudy{
+                width:68px;
+                height:24px;
+                border-radius: 24px;
+                border:1px solid #f00;
+                color:#f00;
+                margin-left:68px;
+                cursor:pointer;
+                }
+            }
+            .personal_plandata{
+                color:#acacac;
+            }
+            .personal_attention{
+                @extend %clearFix;
+                .personal_attentiontime{
+                    width:50%;
+                    float:left;
+                    img{
+                        margin-right:10px;
+                    }
+                    span{
+                        margin-right:40px;
+                    }
+                }
+                .personal_attentionway{
+                    float:left;
+                    width:50%;
+                    img{
+                        margin-right:10px;
+                    }
+                    span{
+                        margin-right:40px;
+                    }
+                }
+            }
+            .personal_buttonpart{
+                margin-top:40px;
+                @extend %clearFix;
+                .personal_toright{
+                float: right;
+                button{
+                    font-weight: bold;
+                    cursor:pointer;
+                    &:first-of-type{
+                    width:96px;
+                    height:36px;
+                    border-radius: 36px;
+                    background:#2e6ed0;
+                    color:#fff;
+                    border:0;
+                    }
+                    &:last-of-type{
+                    width:96px;
+                    height:36px;
+                    background:#fff;
+                    border:0;
+                    }
+                }
+                }
+            }
+            }
+            .el-date-editor{
+                width:140px;
+                margin-right:20px;
+            
+                input{
+                    height:30px;
+                    line-height: 30px;
+                }
+                .el-input__icon{
+                    line-height: 30px;
+                }
+            }
+        }
+    }
     .personal_Content{
         .personal_top {
             width: 1000px;

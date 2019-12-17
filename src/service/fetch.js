@@ -64,7 +64,6 @@ function checkStatus (response) {
         }
         if (UA.android) {
           if (window.jyzx) {
-            console.log('修改 fetch')
             window.hasNotifyLogout = true
             window.jyzx.notifyLogout()
             return

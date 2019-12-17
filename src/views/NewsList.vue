@@ -112,7 +112,6 @@ export default {
         },
         async getArticleChannelInfoList () {
             let data = await GetArticleChannelInfoList({ parentId: 0 })
-            console.log('channel', data)
             if (data.IsSuccess) {
                 let data1 = data.Data.ArticleCategoryResult.map((item) => {
                     item.Id == this.CategoryId ? item.isClick = true : item.isClick = false
@@ -123,7 +122,6 @@ export default {
         },
         async getNoticeCategory () {
             let data = await NoticeCategory({ parentId: 0 })
-            console.log('notice', data)
             if (data.IsSuccess) {
                 this.menuData2 = data.Data.ListData
             }
@@ -139,7 +137,6 @@ export default {
                 EndDate: this.endDate,
                 Keyword: this.keyword
             })
-            console.log(data)
             if (data.IsSuccess) {
                 this.articleList = data.Data.List
                 this.totalPageNumber = Number(data.Data.TotalCount)

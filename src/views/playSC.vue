@@ -383,25 +383,26 @@ export default {
                     errorTimes = 0
                     if (data) {
                         if (data.Type === 401) {
-                        clearTimeout(timer)
-                        document.body.innerHTML = '' // 屏蔽页面
-                        if (confirm('消息：用户已登出，是否登陆？  点击取消将关闭页面')) {
-                            this.$router.push('userLogin')
-                        } else {
-                            window.close()
-                        }
+                            clearTimeout(timer)
+                            document.body.innerHTML = '' // 屏蔽页面
+                            if (confirm('消息：用户已登出，是否登陆？  点击取消将关闭页面')) {
+                                this.$router.push('userLogin')
+                            } else {
+                                window.close()
+                            }
                         } else if (data.Type == 1) {
+                            console.log(data.Type)
                         } else {
-                        clearTimeout(timer)
-                        document.body.innerHTML = ''
-                        alert(data.Message)
-                        this.$router.push('/home')
+                            clearTimeout(timer)
+                            document.body.innerHTML = ''
+                            alert(data.Message)
+                            this.$router.push('/')
                         }
                     } else {
                         clearTimeout(timer)
                         document.body.innerHTML = ''
                         alert('出现错误 将返回首页')
-                        this.$router.push('/home')
+                        this.$router.push('/')
                     }
                     // eslint-disable-next-line 
                     }).catch((error, status) => {
@@ -417,7 +418,6 @@ export default {
             return timer
         },
         initVideo (url) {
-            console.log(url)
             // eslint-disable-next-line
             this.player = jwplayer('myplayer').setup({
                 flashplayer: '../plugins/jwplayer/jwplayer.flash.swf',
@@ -509,7 +509,7 @@ export default {
         async getPdfData () {
             if (this.allPlayInfo) {
                 this.pdfSrc = this.playUrl.url
-                console.log(this.pdfSrc, 999)
+                // console.log(this.pdfSrc, 999)
             }
         },
         async getJYScormData () {
@@ -535,7 +535,7 @@ export default {
                 positionen: rsaEnscrypt(t.toString())
             }, this.AntiForgeryToken).then((data) => {
                 this.browseScore = data.BrowseScore
-                console.log(this.browseScore, 999)
+                // console.log(this.browseScore, 999)
             }, function () {
                 alert("网路异常，将刷新!")
                 window.location.reload()
@@ -551,7 +551,7 @@ export default {
                 }).then((data) => {
                     this.browseScore = data.BrowseScore
                 }).catch((error) => {
-                    console.log(error)
+                    // console.log(error)
                     alert('网路异常，将刷新!')
                     window.location.reload()
                 })
@@ -706,7 +706,6 @@ export default {
                 CourseId: this.id,
                 __RequestVerificationToken: this.AntiForgeryToken
             })
-            console.log(data)
             Message('笔记添加成功')
             this.getVideo() 
         },
@@ -715,7 +714,6 @@ export default {
                 Id: id,
                 __RequestVerificationToken: this.AntiForgeryToken
             })
-            console.log(data)
             Message('笔记删除成功')
             this.getVideo() 
         },

@@ -73,8 +73,8 @@
 
 <script>
 import { MyCenter, DelUserCourseReg } from '../service/getData'
-import { pageCal } from '../service/helpPlugin'
-// import { mapActions } from 'vuex'
+import { pageCal, wordsL } from '../service/helpPlugin'
+import { mapActions } from 'vuex'
 export default {
     name: 'PersonalMyCourse',
     data () {
@@ -97,9 +97,9 @@ export default {
         this.render()
     },
     methods: {
-        // ...mapActions('PersonalCenter', [
-        //     'setplanchangesappear'
-        // ]),
+        ...mapActions('PersonalCenter', [
+            'setplanchangesappear'
+        ]),
         showtype () {
             this.$emit('courseType', this.courseType)
         },
@@ -130,8 +130,8 @@ export default {
             }
         },
         appearPlanBox (con, index) {
-            // let arr = [con, this.perVideoList[index].PlanId, this.perVideoList[index].Id, this.perVideoList[index].Name, this.perVideoList[index].Credit]
-            // this.setplanchangesappear(arr)
+            let arr = [con, this.perVideoList[index].PlanId, this.perVideoList[index].Id, this.perVideoList[index].Name, this.perVideoList[index].Credit]
+            this.setplanchangesappear(arr)
         },
         linkToCourse (courseId) {
             const { href } = this.$router.resolve({ path: '/courseDetail', query: { id: courseId } })
@@ -164,6 +164,7 @@ export default {
             this.changeorstart = []
             this.perVideoList.forEach((item, index) => {
                 let result = item['Credit'].toString()
+                item.Name = wordsL(item.Name, 24)
                 let n = result.lastIndexOf('.')
                 if (n == -1) {
                     item['Credit'] = item['Credit'] + '.00'
@@ -203,7 +204,6 @@ export default {
                     let result = await DelUserCourseReg({
                         courseId: delItem[i]
                     })
-                    console.log(result)
                     if (result.Type == 1) {
                         delItem[i] = 1
                     } else if (result.Type == 0) {
@@ -248,7 +248,7 @@ export default {
                 border-bottom:1px solid #efefef;
                 padding-left: 0;
                 .per_clscheckbox {
-                width: 55px;
+                width: 44px;
                 height: 168px;
                 line-height: 168px;
                 text-align: center;
@@ -256,6 +256,7 @@ export default {
                 }
 
                 .per_video{
+                    width: 432px;
                     margin-top:34px;
                     font-weight: bold;
                     color:#565656;
@@ -296,7 +297,7 @@ export default {
                 .per_progressbox{
                     margin-top:25px;
                     .per_progress{
-                        width:286px;
+                        width:280px;
                         display:inline-block;
                     }
                 .per_progressinfor{
@@ -313,7 +314,7 @@ export default {
                     font-weight:bold;
                     position: absolute;
                     top:110px;
-                    right:200px;
+                    right:205px;
                     .per_addplanvideo{
                         display: inline-block;
                         width:18px;
