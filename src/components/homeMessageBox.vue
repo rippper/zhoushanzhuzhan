@@ -1,11 +1,11 @@
 <template>
     <div class="homemessagebox">
         <a class="pic_Img" href="javascript:;">
-            <img :src="articleModel.Img" alt="">
+            <img :src="articleModel.Image" alt="">
         </a>
         <ul>
-            <li v-for="(item, index) in articleModel.articleList" :key="index">
-                <a href="javascript:;" v-text="'·' + item.ArticleName"></a>
+            <li v-for="(item, index) in articleModel.Course" :key="index">
+                <a href="javascript:;">{{'·' + item.Name | wordLimit(15)}}</a>
             </li>
         </ul>
     </div>
@@ -35,6 +35,12 @@ export default {
     border-radius: 4px;
     .pic_Img{
         display: inline-block;
+        width: 214px;
+        height: 107px;
+        img{
+            width: 214px;
+            height: 107px;
+        }
     }
     ul{
         margin-top: 5px;

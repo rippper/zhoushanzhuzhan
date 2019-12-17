@@ -146,6 +146,16 @@ export const DelUserCourseReg = (data) => fetch.post(Api.DelUserCourseReg.url,
  */
 export const SingleProcess = (data) => fetch.post(Api.SingleProcess.url,
   { ...Api.SingleProcess.data, ...data })
+/**
+ * 首页课程频道分类以及列表
+ */
+export const CourseCategoryWithCourse = (data) => fetch.post(Api.CourseCategoryWithCourse.url,
+  { ...Api.CourseCategoryWithCourse.data, ...data })
+/**
+ * 网上展厅列表
+ */
+export const ProductionInfoList = (data) => fetch.post(Api.ProductionInfoList.url,
+  { ...Api.ProductionInfoList.data, ...data })
 /* 将所有的API封装起来 */
 const allApi = {}
 for (let key in Api) {

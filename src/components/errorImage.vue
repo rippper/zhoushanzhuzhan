@@ -41,7 +41,6 @@ export default {
   @import '../style/mixin';
 
   .picShow{
-    width: 160px;
     .trueImg{
       width: 160px;
       height: 100px;

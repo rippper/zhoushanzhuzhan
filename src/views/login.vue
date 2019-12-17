@@ -164,7 +164,7 @@ export default {
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$router.replace({ path: '/personalCenter/personalPassword' })
+                    // this.$router.replace({ path: '/personalCenter/personalPassword' })
                 }).catch(() => {
                     // 点击取消的操作
                     if (this.remember) {

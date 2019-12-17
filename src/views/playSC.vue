@@ -383,19 +383,18 @@ export default {
                     errorTimes = 0
                     if (data) {
                         if (data.Type === 401) {
-                        clearTimeout(timer)
-                        document.body.innerHTML = '' // 屏蔽页面
-                        if (confirm('消息：用户已登出，是否登陆？  点击取消将关闭页面')) {
-                            this.$router.push('userLogin')
+                            clearTimeout(timer)
+                            document.body.innerHTML = '' // 屏蔽页面
+                            if (confirm('消息：用户已登出，是否登陆？  点击取消将关闭页面')) {
+                                this.$router.push('userLogin')
+                            } else {
+                                window.close()
+                            }
                         } else {
-                            window.close()
-                        }
-                        } else if (data.Type == 1) {
-                        } else {
-                        clearTimeout(timer)
-                        document.body.innerHTML = ''
-                        alert(data.Message)
-                        this.$router.push('/home')
+                            clearTimeout(timer)
+                            document.body.innerHTML = ''
+                            alert(data.Message)
+                            this.$router.push('/home')
                         }
                     } else {
                         clearTimeout(timer)

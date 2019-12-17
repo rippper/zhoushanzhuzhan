@@ -9,6 +9,7 @@ const Home = '/Home'
 const Course = '/Course'
 const CourseProcess = '/CourseProcess'
 const Article = '/article'
+const Production = '/production'
 // const Collection = '/Collection'
 export default {
   // 检查用户登录状态
@@ -160,5 +161,15 @@ export default {
   DelUserCourseReg: {
       url: API_URL + Course + '/DelUserCourseReg',
       data: {}
+  },
+  // 首页课程频道分类以及列表
+  CourseCategoryWithCourse: {
+    url: API_URL + Course + '/CourseCategoryWithCourse',
+    data: {}
+  },
+  // 首页课程频道分类以及列表
+  ProductionInfoList: {
+    url: API_URL + Production + '/ProductionInfoList',
+    data: {}
   } 
 }

@@ -41,16 +41,16 @@
               <li>
                 <ul>
                   <li class="content_item" v-for="(item, index) in socialNews" :key="index" v-show="msgBoxType == 0">
-                    <span class="ct_left" v-text="item.msg" :title="item.msgAdd"></span>
-                    <span class="ct_right" v-text="item.date"></span>
+                    <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
+                    <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
                   </li>
                 </ul>
               </li>
               <li>
                 <ul>
                   <li class="content_item" v-for="(item, index) in notifiy" :key="index" v-show="msgBoxType == 1">
-                    <span class="ct_left" v-text="item.msg" :title="item.msgAdd"></span>
-                    <span class="ct_right" v-text="item.date"></span>
+                    <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
+                    <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
                   </li>
                 </ul>
               </li>
@@ -249,12 +249,21 @@
           <ul ref="rollpart" @mouseenter="rollStop()" @mouseleave="rollStart()">
             <li v-for="(item, index) in scrollList" :key="index">
               <a href="javascript:;">
-                <img :src="item.Img" alt="">
+                <img :src="item.Image" alt="">
               </a>
-              <p class="home_hc_title" v-text="item.Title"></p>
-              <p class="home_hc_author">作者：<span v-text="item.Author"></span></p>
+              <p class="home_hc_title" v-text="item.ProductionName"></p>
+              <p class="home_hc_author">作者：<span v-text="item.AuthorName"></span></p>
             </li>
           </ul>
+          <!-- <swiper :options="swiperOption" ref="mySwiper" class="swiper-no-swiping" v-if="scrollList.length > 0" @mouseenter.native="on_swiper_enter" @mouseleave.native="on_swiper_leave">
+            <swiper-slide v-for="(item, index) in scrollList" :key="index">
+              <a href="javascript:;">
+                <img :src="item.Image" alt="">
+              </a>
+              <p class="home_hc_title" v-text="item.ProductionName"></p>
+              <p class="home_hc_author">作者：<span v-text="item.AuthorName"></span></p>
+            </swiper-slide>
+          </swiper> -->
         </div>
       </div>
     </div>
@@ -271,8 +280,8 @@
           <ul>
             <li v-for="(item, index) in socityFamily" :key="index">
               <a href="javascript:;">
-                <img :src="item.Img" alt="">
-                <p v-text="item.Title"></p>
+                <error-Image :src="item.ArticleImg"></error-Image>
+                <p>{{item.ArticleTitle | wordLimit(9)}}</p>
               </a>
             </li>
           </ul>
@@ -284,8 +293,10 @@
 </template>
 
 <script>
-import { headerFix, footerFix, homeMessageBox } from '../components'
+import { headerFix, footerFix, homeMessageBox, errorImage } from '../components'
 import { mapActions, mapState } from 'vuex'
+import { GetArticleInfoList, CourseCategoryWithCourse, ProductionInfoList } from '../service/getData'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   name: 'home',
   data () {
@@ -305,45 +316,8 @@ export default {
         }
       ],
       msgBoxType: 0,
-      socialNews: [
-        {
-          msg: '2019舟山市全民终身学习活动周精彩回顾',
-          date: '2019-11-21',
-          msgAdd: '2019舟山市全民终身学习活动周精彩回顾'
-        },
-        {
-          msg: '2019舟山市全民终身学习活动周精彩回顾',
-          date: '2019-11-21',
-          msgAdd: '2019舟山市全民终身学习活动周精彩回顾'
-        },
-        {
-          msg: '2019舟山市全民终身学习活动周精彩回顾',
-          date: '2019-11-21',
-          msgAdd: '2019舟山市全民终身学习活动周精彩回顾'
-        },
-        {
-          msg: '2019舟山市全民终身学习活动周精彩回顾',
-          date: '2019-11-21',
-          msgAdd: '2019舟山市全民终身学习活动周精彩回顾'
-        },
-        {
-          msg: '2019舟山市全民终身学习活动周精彩回顾',
-          date: '2019-11-21',
-          msgAdd: '2019舟山市全民终身学习活动周精彩回顾'
-        },
-        {
-          msg: '2019舟山市全民终身学习活动周精彩回顾',
-          date: '2019-11-21',
-          msgAdd: '2019舟山市全民终身学习活动周精彩回顾'
-        }
-      ],
-      notifiy: [
-        {
-          msg: '2019年舟山市家庭教育规划课题和实验项目立项评...',
-          date: '2019-12-03',
-          msgAdd: '2019年舟山市家庭教育规划课题和实验项目立项评审结果的通知'
-        }
-      ],
+      socialNews: [],
+      notifiy: [],
       articleCommed:[
         {
           Img: require('../assets/hl_oldManEdu.png'),
@@ -425,118 +399,8 @@ export default {
       ],
       adIndex: 0,
       advRobot: '',
-      socityFamily: [
-        {
-          Img: require('../assets/socity_family.jpg'),
-          Title: '我市两位教师喜获...'
-        },
-        {
-          Img: require('../assets/socity_family.jpg'),
-          Title: '我市两位教师喜获...'
-        },
-        {
-          Img: require('../assets/socity_family.jpg'),
-          Title: '我市两位教师喜获...'
-        },
-        {
-          Img: require('../assets/socity_family.jpg'),
-          Title: '我市两位教师喜获...'
-        },
-        {
-          Img: require('../assets/socity_family.jpg'),
-          Title: '我市两位教师喜获...'
-        },
-        {
-          Img: require('../assets/socity_family.jpg'),
-          Title: '我市两位教师喜获...'
-        },
-        {
-          Img: require('../assets/socity_family.jpg'),
-          Title: '我市两位教师喜获...'
-        }
-      ],
-      scrollList: [
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        },
-        {
-          Img: require('../assets/scrollImg.png'),
-          Title: '文明我先行',
-          Author: '余显定'
-        }
-      ],
+      socityFamily: [],
+      scrollList: [],
       rollpartRobot: '',
       socityRank: [
         {
@@ -656,7 +520,24 @@ export default {
           Name: '陈  默'
         },
       ],
-      timer: ''
+      timer: '',
+      swiperOption: {
+        notNextTick: true,
+        speed: 1000, // 滚动速度
+        setWrapperSize: true,
+        // freeMode: true,// true则是自由模式，不会自动贴合滑动位置
+        autoplay: {
+          delay:10,
+          autoplayDisableOnInteraction: false
+        },
+        // touchStartPreventDefault : false,
+        // touchStartForcePreventDefault: false,
+        loop:true, // 循环
+      　observer:true, // 修改swiper自己或子元素时，自动初始化swiper 
+　　    observeParents:true, // 修改swiper的父元素时，自动初始化swiper  
+        spaceBetween:4, // slide之间的距离（单位px）
+        slidesPerView:5 // slide可见数量
+      }
     }
   },
   mounted () {
@@ -666,6 +547,11 @@ export default {
     }, 5000)
     this.rollStart()
     window.addEventListener('scroll', this.getDistance)
+    this.getArticleInfoList()
+    this.getArticleInfoList2()
+    this.getArticleInfoList3()
+    this.getCourseCategoryWithCourse()
+    this.getProductionInfoList()
   },
   beforeDestroy () {
     clearInterval(this.advRobot)
@@ -738,12 +624,85 @@ export default {
           clearInterval(self.timer)
         }
       }, 10)
+    },
+    // 社交新闻
+    async getArticleInfoList () {
+      let data = await GetArticleInfoList ({
+        CategoryId: 135,
+        Page: 1,
+        Sort: 'Id',
+        Order: 'desc',
+        Rows: 7
+      })
+      if (data.IsSuccess) {
+        this.socialNews = data.Data.List
+      }
+    },
+    // 通知公告
+    async getArticleInfoList2 () {
+      let data = await GetArticleInfoList ({
+        CategoryId: 139,
+        Page: 1,
+        Sort: 'Id',
+        Order: 'desc',
+        Rows: 7
+      })
+      if (data.IsSuccess) {
+        this.notifiy = data.Data.List
+      }
+    },
+    // 社区之家
+    async getArticleInfoList3 () {
+      let data = await GetArticleInfoList ({
+        CategoryId: 140,
+        Page: 1,
+        Sort: 'Id',
+        Order: 'desc',
+        Rows: 7
+      })
+      if (data.IsSuccess) {
+        this.socityFamily = data.Data.List
+      }
+    },
+    //  课程频道及列表
+    async getCourseCategoryWithCourse () {
+      let data = await CourseCategoryWithCourse ({
+        Page: 1,
+        Sort: 'Sort',
+        Order: 'desc',
+        Rows: 12
+      })
+      this.articleCommed = data.ListData
+      console.log(this.articleCommed, 999)
+    },
+    // 网上展厅
+    async getProductionInfoList () {
+      let data = await ProductionInfoList ({
+        ProductionCategoryId: '',
+        Page: 1,
+        Rows: 8,
+        Sort: 'Id',
+        Order: 'desc'
+      })
+      if (data.IsSuccess) {
+        this.scrollList = data.Data.List
+        this.scrollList = this.scrollList.concat(this.scrollList) 
+      }
     }
+    // on_swiper_enter () {
+    //     console.log(this.$refs.mySwiper)
+    //     this.$refs.mySwiper.swiper.autoplay.stop()
+    // },
+    // on_swiper_leave () {
+    //     this.$refs.mySwiper.swiper.autoplay.start()
+    // },
+
   },
   components: {
     headerFix,
     footerFix,
-    homeMessageBox
+    homeMessageBox,
+    errorImage
   }
 }
 </script>
@@ -1296,6 +1255,17 @@ export default {
               font-size: 12px;
               margin-top: 8px;
               color: #989898; 
+            }
+          }
+        }
+        .swiper-wrapper{
+          transition-timing-function: linear;
+          .swiper-slide{
+            a{
+              img{
+                width: 180px; 
+                height: 150px;
+              }
             }
           }
         }
