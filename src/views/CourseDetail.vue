@@ -127,7 +127,6 @@ export default {
         },
         slChannelClick (items, item, menu) {
             this.channelId = items.id
-            console.log(this.channelId)
             this.ctitle = item.text
             this.$router.push({ path: '/courselist', query: { title: this.ctitle, channelId: this.channelId } })
         },
@@ -341,9 +340,15 @@ export default {
                             margin-top: 10px;
                             .el-progress{
                                 float: left;
-                                width: 300px;
+                                width: 280px;
                                 margin-left: 5px;
                                 margin-top: 2px;
+                                .el-progress-bar{
+                                    width:270px;
+                                }
+                                .el-progress__text{
+                                    font-size: 14px!important;
+                                }
                             }
                         }
                         .mwc-brief1-handle{

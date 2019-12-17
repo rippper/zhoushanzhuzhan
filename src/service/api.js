@@ -7,6 +7,7 @@ const Pages = '/pages'
 const User = '/User'
 const Home = '/Home'
 const Course = '/Course'
+const File = '/File'
 const CourseProcess = '/CourseProcess'
 const Article = '/article'
 const Production = '/production'
@@ -171,5 +172,54 @@ export default {
   ProductionInfoList: {
     url: API_URL + Production + '/ProductionInfoList',
     data: {}
-  } 
+  },
+  // 获取课程计划
+  StudyPlanGet: {
+    url: API_URL + Course + '/StudyPlanGet',
+    data: {}
+  },
+  // 上传用户图片
+  SetUserPhoto: {
+    url: API_URL + User + '/SetUserPhoto'
+  },
+  //  附件上传
+  UploadAttachment: {
+    url: API_URL + File + '/UploadAttachment',
+    data: {}
+  },
+  // 上传计划修改
+  StudyPlanUpdate: {
+    url: API_URL + Course + '/StudyPlanUpdate',
+    data: {}
+  },
+  // 添加新的修改计划
+  StudyPlanAdd: {
+    url: API_URL + Course + '/StudyPlanAdd',
+    data: {}
+  },
+  // 我的课程收藏
+  MyCourseCollect: {
+      url: API_URL + User + '/MyCourseFavorite',
+      data: { Rows: 5 }
+  },
+  // 我的文章收藏
+  MyEssayCollect: {
+    url: API_URL + User + '/MyArticleFavorite',
+    data: { Rows: 6 }
+  },
+  // 删除收藏
+  CollectDelete: {
+    url: API_URL + User + '/FavoriteDelete',
+    data: {}
+  },
+  // 获取课程笔记
+  CourseNoteList: {
+    url: API_URL + Course + '/CourseNoteList',
+    data: {}
+  },
+  // 获取笔记信息
+  NoteUpdate: {
+    url: API_URL + Course + '/NoteUpdate',
+    data: {}
+  },
 }

@@ -108,7 +108,6 @@ const PersonalCenter = {
                 payload.splice(0, 2)
                 commit(SET_PLANCHANGE_APPEARCREATE, payload)
             } else {
-                console.log(payload)
                 let msg = await StudyPlanGet({
                     planId: payload[1]
                 })

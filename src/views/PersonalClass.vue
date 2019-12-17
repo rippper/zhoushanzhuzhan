@@ -75,7 +75,7 @@ export default {
             })
             this.$refs.per_couTopLab[numindex].style.color = '#2e6ed0'
             if (numindex == 0) {
-                self.$router.push({ path: '/personalCenter/personClass/personalmycourse' })
+                self.$router.push({ path: 'personalmycourse' })
             } else if (numindex == 1) {
                 // self.$router.push({ path: '/personalCenter/personClass/personalmyfincou' })
             } else if (numindex == 2) {
@@ -87,6 +87,13 @@ export default {
                 item.style.color = '#333'
             })
             this.$refs.per_couTopLab[numindex - 1].style.color = '#2e6ed0'
+        },
+        keysearch (evt) {
+            let theEvent = window.event || evt
+            let code = theEvent.keyCode || theEvent.which || theEvent.charCode
+            if (code == 13) {
+                this.searchRender()
+            }
         },
         searchRender () {
             switch (this.selectOptionsValue) {

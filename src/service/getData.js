@@ -156,6 +156,60 @@ export const CourseCategoryWithCourse = (data) => fetch.post(Api.CourseCategoryW
  */
 export const ProductionInfoList = (data) => fetch.post(Api.ProductionInfoList.url,
   { ...Api.ProductionInfoList.data, ...data })
+/**
+ * 获取课程计划
+ */
+export const StudyPlanGet = (data) => fetch.post(Api.StudyPlanGet.url,
+  { ...Api.StudyPlanGet.data, ...data })
+/**
+ * 上传用户头像
+ */
+export const SetUserPhoto = (data) => fetch.post(Api.SetUserPhoto.url, { ...Api.SetUserPhoto.data, ...data })
+/**
+ * 附件上传
+ */
+export const UploadAttachment = (data, config) => fetch.postFormData(Api.UploadAttachment.url, data,
+  config)
+/**
+ * 上传课程计划
+ */
+export const StudyPlanUpdate = (data) => fetch.post(Api.StudyPlanUpdate.url,
+  { ...Api.StudyPlanUpdate.data, ...data })
+/**
+ * 添加课程计划
+ */
+export const StudyPlanAdd = (data) => fetch.post(Api.StudyPlanAdd.url,
+  { ...Api.StudyPlanAdd.data, ...data })
+/**
+ *我的收藏课程   
+ */
+export const CourseCollect = (data) => fetch.post(Api.MyCourseCollect.url,
+  { ...Api.MyCourseCollect.data, ...data })
+/**
+ * 我的收藏文章
+ */
+export const EssayCollect = (data) => fetch.post(Api.MyEssayCollect.url,
+  { ...Api.MyEssayCollect.data, ...data })
+/**
+ * 我的收藏删除
+ */
+export const CollectDelete = (data) => fetch.post(Api.CollectDelete.url,
+  { ...Api.CollectDelete.data, ...data })
+/**
+ * 获取课程笔记列表
+ */
+export const CourseNoteList = (data) => fetch.post(Api.CourseNoteList.url,
+  { ...Api.CourseNoteList.data, ...data })
+/**
+ * 获取笔记信息信息
+ */
+export const NoteUpdate = (data) => fetch.get(Api.NoteUpdate.url,
+  { ...Api.NoteUpdate.data, ...data })
+/**
+ * 修改笔记信息
+ */
+export const NoteUpdatePost = (data) => fetch.post(Api.NoteUpdate.url,
+  { ...Api.NoteUpdate.data, ...data })
 /* 将所有的API封装起来 */
 const allApi = {}
 for (let key in Api) {

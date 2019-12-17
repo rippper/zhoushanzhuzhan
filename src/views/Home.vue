@@ -619,7 +619,6 @@ export default {
           self.$refs.floatBox.style.top = self.$refs.floatBox.offsetTop - speed + 'px'
         }
         if (speed == 0) {
-          console.log(111)
           self.$refs.floatBox.style.top = totalDistance + 'px'
           clearInterval(self.timer)
         }
