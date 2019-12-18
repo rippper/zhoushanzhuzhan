@@ -39,16 +39,16 @@
             <router-link to="/">网站首页</router-link>
           </li>
           <li>
-            <router-link to="/newslist">新闻信息</router-link>
+            <router-link :to="{ path: '/newslist', query: { Id: 134 } }">新闻信息</router-link>
             <ul>
               <li>
-                <router-link to="/">通知公告</router-link>
+                <router-link :to="{ path: '/newslist', query: { Id: 139 } }">通知公告</router-link>
               </li>
               <li>
-                <router-link to="/">社教新闻</router-link>
+                <router-link :to="{ path: '/newslist', query: { Id: 135 } }">社教新闻</router-link>
               </li>
               <li>
-                <router-link to="/">图文咨询</router-link>
+                <router-link :to="{ path: '/newslist', query: { Id: 138 } }">图文咨询</router-link>
               </li>
             </ul>
           </li>
@@ -56,61 +56,61 @@
             <router-link to="/courselist">课程中心</router-link>
             <ul>
               <li>
-                <router-link to="/">老年教育</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '老年教育' } }">老年教育</router-link>
               </li>
               <li>
-                <router-link to="/">家庭教育</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '家庭教育' } }">家庭教育</router-link>
               </li>
               <li>
-                <router-link to="/">微课程</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '微课程' } }">微课程</router-link>
               </li>
               <li>
-                <router-link to="/">初中教育</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '初中教育' } }">初中教育</router-link>
               </li>
               <li>
-                <router-link to="/">小学教育</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '小学教育' } }">小学教育</router-link>
               </li>
               <li>
-                <router-link to="/">学前教育</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '学前教育' } }">学前教育</router-link>
               </li>
               <li>
-                <router-link to="/">幼儿教育</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '幼儿教育' } }">幼儿教育</router-link>
               </li>
               <li>
-                <router-link to="/">人生规划</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '人生规划' } }">人生规划</router-link>
               </li>
               <li>
-                <router-link to="/">创新课堂</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '创新课堂' } }">创新课堂</router-link>
               </li>
               <li>
-                <router-link to="/">早教课堂</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '早教课堂' } }">早教课堂</router-link>
               </li>
               <li>
-                <router-link to="/">海洋经济</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '海洋经济' } }">海洋经济</router-link>
               </li>
               <li>
-                <router-link to="/">舟山特色课程</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '舟山特色课程' } }">舟山特色课程</router-link>
               </li>
               <li>
-                <router-link to="/">培训之窗</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '培训之窗' } }">培训之窗</router-link>
               </li>
               <li>
-                <router-link to="/">职场纵横</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '职场纵横' } }">职场纵横</router-link>
               </li>
               <li>
-                <router-link to="/">文化科普</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '文化科普' } }">文化科普</router-link>
               </li>
               <li>
-                <router-link to="/">家庭理财</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '家庭理财' } }">家庭理财</router-link>
               </li>
               <li>
-                <router-link to="/">休闲保健</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '休闲保健' } }">休闲保健</router-link>
               </li>
               <li>
-                <router-link to="/">渔农民培训</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '渔农民培训' } }">渔农民培训</router-link>
               </li>
               <li>
-                <router-link to="/">游学专题</router-link>
+                <router-link :to="{ path: '/courselist', query: { title: '游学专题' } }">游学专题</router-link>
               </li>
             </ul>
           </li>

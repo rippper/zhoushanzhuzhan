@@ -151,12 +151,13 @@ export default {
             this.menuData.forEach(item => {
                 if (item.Id == this.CategoryId) {
                     item.isClick = true
+                } else {
+                    item.isClick = false
                 }
             })
         },
         async getNoticeCategory () {
             let data = await NoticeCategory({ parentId: 0 })
-            console.log(data)
             if (data.IsSuccess) {
                 this.menuData2 = data.Data.ListData
             }
@@ -177,6 +178,14 @@ export default {
                 this.totalPageNumber = Number(data.Data.TotalCount)
             }
         },
+    },
+    watch: {
+        $route (value) {
+            this.CategoryId = this.$route.query.Id
+            this.articleList = []
+            this.getArticleInfoList()
+            this.getArticleChannelInfoList()
+        }
     },
     components: {
         headerFix,

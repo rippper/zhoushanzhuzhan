@@ -24,7 +24,9 @@
                                         <no-data-img :src="item.Image"></no-data-img>
                                     </div>
                                     <div class="title-text l">
-                                        <p class="title-text1" @click="flChannelClick(item, channelList)" :class="{active:item.state=='open'}">{{item.text}}</p>
+                                        <router-link :to="{ path: '/courselist', query: { title: item.text } }">
+                                            <p class="title-text1" :class="{active:item.state=='open'}">{{item.text}}</p>
+                                        </router-link>
                                     </div>
                                 </div>
                                 <template v-if="item.children">
@@ -152,6 +154,7 @@ export default {
             this.getCourseList()
         },
         flChannelClick (item, menu) {
+            console.log(item)
             menu.forEach((itemf) => {
                 itemf.state = closed
                 let itemChildren = itemf.children || []
@@ -232,9 +235,25 @@ export default {
         }
     },
     watch: {
-        ctitle (value) {
-            console.log(111)
-            this.getCourseList()
+        $route (value) {
+            if (!this.$route.query.title) {
+                console.log(111)
+                this.channelId = 0
+                this.ctitle = ''
+                this.channelList = []
+                this.videoList = []
+                this.getCourseChannel()
+                return false
+            }
+            this.ctitle = this.$route.query.title
+            this.videoList = []
+            let Obj = null
+            this.channelList.forEach(item => {
+                if (item.text == this.ctitle) {
+                    Obj = item
+                }
+            })
+            this.flChannelClick(Obj, this.channelList)
         }
     },
     components: {
