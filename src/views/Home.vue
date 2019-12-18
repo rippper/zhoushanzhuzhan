@@ -33,7 +33,8 @@
               <a href="javascript:;" :class="{ 'title_active': msgBoxType == 1 }" @mouseenter="titleTypeChange(1)">通知公告</a>
             </div>
             <div class="nt_right">
-              <a href="javascript:;">更多</a>
+              <router-link :to="{path: '/NewsList', query: {Id: 135}}" v-if="this.msgBoxType == 0">更多</router-link>
+              <router-link :to="{path: '/NewsList', query: {Id: 139}}" v-else>更多</router-link>
             </div>
           </div>
           <div class="content_list">
@@ -176,7 +177,7 @@
             <div class="teachersList_title">
               <div class="home_tt_left">名师风采</div>
               <div class="home_tt_right">
-                <a href="javascript:;">
+                <a href="http://www.zsxxnet.cn/teacher/">
                   <img src="../assets/cg_more.png" alt="">
                 </a>
               </div>
@@ -184,9 +185,10 @@
             <div class="teachersList_content">
               <swiper :options="swiperOption" ref="mySwiper"  v-if="teacherList.length > 0" >
                 <swiper-slide v-for="(item, index) in teacherList" :key="index">
-                  <router-link :to="{path: '/NewsDetail', query: {id: item.ArticleId}}">
+                  <a :href="`http://www.zsxxnet.cn/teacher/?ID=${item.ArticleId}`">
+                    <!-- "  {path: '/NewsDetail', query: {id: item.ArticleId}}" -->
                     <img :src="item.ArticleImg" alt="">
-                  </router-link>
+                  </a>
                   <p class="name">{{item.ArticleTitle}}</p>
                 </swiper-slide>
               </swiper>
@@ -232,7 +234,7 @@
       <div class="home_ad">
           <ul>
               <li :class="{'ad_action': item.jugment}" v-for="(item, index) in advpart" :key="index">
-                  <a href="http://www.zsxxnet.cn/education/index.aspxx">
+                  <a href="http://www.zsxxnet.cn/education/index.aspx">
                       <img :src="item.Image" alt="">
                   </a>
               </li>
@@ -252,7 +254,7 @@
         <div class="ho_content">
           <ul ref="rollpart" @mouseenter="rollStop()" @mouseleave="rollStart()">
             <li v-for="(item, index) in scrollList" :key="index">
-              <a :href= "`http://www.zsxxnet.cn/hall/Pro_Detail.aspx?id=${item.Id}`" >
+              <a :href="`http://www.zsxxnet.cn/hall/Pro_Detail.aspx?id=${item.Id}`" >
                 <img :src="item.Image" alt="">
               </a>
               <p class="home_hc_title" v-text="item.ProductionName"></p>
@@ -267,14 +269,14 @@
         <div class="home_socityfamily_title">
           <div class="home_st_left">社区之家</div>
           <div class="home_st_right">
-            <a href="javascript:;">舟山风貌</a> /
-            <a href="javascript:;">场地建设</a>
+            <router-link :to="{path: '/NewsList?Id=141'}">舟山风貌</router-link> /
+            <a href="http://www.zsxxnet.cn/sourceshare/space.aspx">场地建设</a>
           </div>
         </div>
         <div class="home_socityfamily_content">
           <ul>
             <li v-for="(item, index) in socityFamily" :key="index">
-              <a href="javascript:;">
+              <a :href="`http://www.zsxxnet.cn/artical/detail.aspx?articleid=${item.ArticleId}`">
                 <error-Image :src="item.ArticleImg"></error-Image>
                 <p>{{item.ArticleTitle | wordLimit(9)}}</p>
               </a>
@@ -436,7 +438,7 @@ export default {
           delay: 4000,
           disableOnInteraction: false
         },
-        // autoplay: true,
+        // autoplay: false,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
@@ -1032,12 +1034,14 @@ export default {
             .swiper-wrapper{
               .swiper-slide{
                 width: 56px;
-                height: 69px;
                 a{
                   img{
                     width: 56px;
                     height: 69px;
                   }
+                }
+                p{
+                  color: #333;
                 }
               }
             }

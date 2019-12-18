@@ -42,13 +42,13 @@
             <router-link to="/newslist">新闻信息</router-link>
             <ul>
               <li>
-                <router-link to="/">通知公告</router-link>
+                <router-link :to="{path: '/newslist', query:{Id: 139}}">通知公告</router-link>
               </li>
               <li>
-                <router-link to="/">社教新闻</router-link>
+                <router-link :to="{path: '/newslist', query:{Id: 135}}">社教新闻</router-link>
               </li>
               <li>
-                <router-link to="/">图文咨询</router-link>
+                <router-link :to="{path: '/newslist', query:{Id: 139}}">图文咨询</router-link>
               </li>
             </ul>
           </li>
@@ -115,65 +115,65 @@
             </ul>
           </li>
           <li>
-            <a href="javascript:;">老年教育</a>
+            <a href="http://www.zsxxnet.cn/UnivElders/">老年教育</a>
           </li>
           <li>
-            <a href="javascript:;">家庭教育</a>
+            <a href="http://www.zsxxnet.cn/jtjy/jtjy.aspx">家庭教育</a>
           </li>
           <li>
-            <router-link to="/">电子资源</router-link>
+            <a href="http://www.zsxxnet.cn/elelib/tipmessage.aspx">电子资源</a>
           </li>
           <li>
-            <router-link to="/">网上展厅</router-link>
+            <a href="http://www.zsxxnet.cn/hall/Pro_More.aspx">网上展厅</a>
             <ul>
               <li>
-                <router-link to="/">摄影作品展</router-link>
+                <a href="http://www.zsxxnet.cn/hall/Pro_More.aspx?TypeId=3">摄影作品展</a>
               </li>
               <li>
-                <router-link to="/">国画作品展</router-link>
+                <a href="http://www.zsxxnet.cn/hall/Pro_More.aspx?TypeId=2">国画作品展</a>
               </li>
               <li>
-                <router-link to="/">书法作品展</router-link>
+                <a href="http://www.zsxxnet.cn/hall/Pro_More.aspx?TypeId=1">书法作品展</a>
               </li>
             </ul>
           </li>
           <li>
-            <router-link to="/">社区教研</router-link>
+            <a href="http://www.zsxxnet.cn/artical/Article_List.aspx?typeid=144">社区教研</a>
           </li>
           <li>
-            <router-link to="/">社区之家</router-link>
+            <a href="http://www.zsxxnet.cn/CommHouse.aspx">社区之家</a>
             <ul>
               <li>
-                <router-link to="/">成果展示</router-link>
+                <a href="http://www.zsxxnet.cn/artical/Article_List.aspx?typeid=140">成果展示</a>
               </li>
               <li>
-                <router-link to="/">舟山风貌</router-link>
+                <a href="http://www.zsxxnet.cn/zsScene.aspx">舟山风貌</a>
               </li>
               <li>
-                <router-link to="/">场地建设</router-link>
+                <a href="http://www.zsxxnet.cn/sourceshare/space.aspx">场地建设</a>
               </li>
             </ul>
           </li>
           <li>
-            <router-link to="/">建言献策</router-link>
+            <a href="http://www.zsxxnet.cn/usercenter/JianyanList.aspx">建言献策</a>
           </li>
           <li>
-            <router-link to="/">区县平台</router-link>
+            <a href="http://www.zsxxnet.cn/AreaMap.aspx">区县平台</a>
             <ul>
               <li>
-                <router-link to="/">定海区</router-link>
+                <a href="http://dh.zsxxnet.cn/">定海区</a>
               </li>
               <li>
-                <router-link to="/">普陀区</router-link>
+                <a href="http://pt.zsxxnet.cn/">普陀区</a>
               </li>
               <li>
-                <router-link to="/">岱山县</router-link>
+                <a href="http://ds.zsxxnet.cn/">岱山县</a>
               </li>
               <li>
-                <router-link to="/">嵊泗县</router-link>
+                <a href="http://ss.zsxxnet.cn/">嵊泗县</a>
               </li>
               <li>
-                <router-link to="/">临城新区</router-link>
+                <a href="http://lc.zsxxnet.cn/">临城新区</a>
               </li>
             </ul>
           </li>
