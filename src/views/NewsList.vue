@@ -19,7 +19,7 @@
                 <div class="cm-lesson">
                     <div class="cm-lesson-top clearfix">
                         <div class="cm-lesson-top1 l">
-                            全部文章
+                            新闻文章
                         </div>
                         <div class="cm-lesson-top3 r">
                             <template>
@@ -63,9 +63,46 @@ export default {
     data () {
         return {
             menuIcon: articleIcon,
-            CategoryId: this.$route.query.Id || '0',
-            menuListTitle: '文章分类',
-            menuData: [],
+            CategoryId: this.$route.query.Id ? this.$route.query.Id : 134,
+            menuListTitle: '新闻分类',
+            menuData: [
+                {
+                    Id: 134,
+                    Name: "新闻信息",
+                    isClick: false,
+                },
+                {
+                    Id: 138,
+                    Name: "图文资讯",
+                    isClick: false,
+                },
+                {
+                    Id: 135,
+                    Name: "社教新闻",
+                    isClick: false,
+                },
+                {
+                    Id: 139,
+                    Name: "通知公告",
+                    isClick: false,
+                },
+                {
+                    Id: 140,
+                    Name: "社区之家",
+                    isClick: false,
+                },
+                {
+                    Id: 144,
+                    Name: "社区教研",
+                    isClick: false,
+                },
+                {
+                    Id: 164,
+                    Name: "政策法规",
+                    isClick: false,
+                },
+            ],
+            desc: 'Id',
             sortShow: true,
             menuListShow: true,
             titleText1: '新闻',
@@ -77,7 +114,7 @@ export default {
             currentPage: 1,
             totalPageNumber: 0,
             page: '1',
-            rows: 10,
+            rows: 12,
         }
     },
     mounted () {
@@ -110,18 +147,16 @@ export default {
             this.page = 1
             this.getArticleInfoList()
         },
-        async getArticleChannelInfoList () {
-            let data = await GetArticleChannelInfoList({ parentId: 0 })
-            if (data.IsSuccess) {
-                let data1 = data.Data.ArticleCategoryResult.map((item) => {
-                    item.Id == this.CategoryId ? item.isClick = true : item.isClick = false
-                    return item
-                })
-                this.menuData = data1
-            }
+        getArticleChannelInfoList () {
+            this.menuData.forEach(item => {
+                if (item.Id == this.CategoryId) {
+                    item.isClick = true
+                }
+            })
         },
         async getNoticeCategory () {
             let data = await NoticeCategory({ parentId: 0 })
+            console.log(data)
             if (data.IsSuccess) {
                 this.menuData2 = data.Data.ListData
             }
@@ -156,6 +191,9 @@ export default {
 <style lang="scss">
 @import "../style/mixin";
 .newslist{
+    max-width: 1440px;
+    width: 100%;
+    margin:0 auto;
     background: url('../assets/bd_background.png') no-repeat;
     .main{
         width: 1000px;

@@ -72,7 +72,43 @@ export default {
             mid: this.$route.query.mid,
             menuIcon: require('../assets/classify.png'),
             menuListTitle: '文章分类',
-            menuData: [],
+            menuData: [
+                {
+                    Id: 134,
+                    Name: "新闻信息",
+                    isClick: false,
+                },
+                {
+                    Id: 138,
+                    Name: "图文资讯",
+                    isClick: false,
+                },
+                {
+                    Id: 135,
+                    Name: "社教新闻",
+                    isClick: false,
+                },
+                {
+                    Id: 139,
+                    Name: "通知公告",
+                    isClick: false,
+                },
+                {
+                    Id: 140,
+                    Name: "社区之家",
+                    isClick: false,
+                },
+                {
+                    Id: 144,
+                    Name: "社区教研",
+                    isClick: false,
+                },
+                {
+                    Id: 164,
+                    Name: "政策法规",
+                    isClick: false,
+                },
+            ],
             sortShow: true,
             menuListShow: true,
             titleText1: '新闻',
@@ -86,6 +122,7 @@ export default {
         }
     },
     mounted () {
+        this.getArticleChannelInfoList()
         this.render()
     },
     methods: {
@@ -173,19 +210,18 @@ export default {
             this.bottomTo(this.bannerIndex, 'nature')
             this.localIndex = this.bannerIndex + 1
         }, 300),
+        getArticleChannelInfoList () {
+            this.menuData.forEach(item => {
+                if (item.Id == this.mid) {
+                    item.isClick = true
+                }
+            })
+        },
         async render () {
-            let articleChannel = await GetArticleChannelInfoList({ parentId: 0 })
             let Notice = await NoticeCategory({ parentId: 0 })
             let Content = await ArticleContent({ Id: this.id })
             let Favorite = await FavoriteExist({ Id: this.id, type: 'Article' })
 
-            if (articleChannel.IsSuccess) {
-                    let data1 = articleChannel.Data.ArticleCategoryResult.map((item) => {
-                        item.Id == this.mid ? item.isClick = true : item.isClick = false
-                        return item
-                    })
-                    this.menuData = data1
-            }
             if (Notice.IsSuccess) {
                 this.menuData2 = Notice.Data.ListData
             }
@@ -248,6 +284,9 @@ export default {
 <style lang="scss">
 @import "../style/mixin";
 .NewsDetail{
+    max-width: 1440px;
+    width: 100%;
+    margin:0 auto;
     background: url('../assets/bd_background.png') no-repeat;
     .main{
         width: 1000px;
