@@ -1,11 +1,13 @@
 <template>
     <div class="homemessagebox">
-        <a class="pic_Img" href="javascript:;">
+        <router-link class="pic_Img" :to="{path: '/CourseList', query: {channel: articleModel.id}}">
             <img :src="articleModel.Image" alt="">
-        </a>
+        </router-link> 
         <ul>
             <li v-for="(item, index) in articleModel.Course" :key="index">
-                <a href="javascript:;">{{'·' + item.Name | wordLimit(15)}}</a>
+                <router-link :to="{path: '/CourseDetail', query: {id: item.Id}}">
+                     {{'·' + item.Name | wordLimit(15)}}
+                </router-link>
             </li>
         </ul>
     </div>

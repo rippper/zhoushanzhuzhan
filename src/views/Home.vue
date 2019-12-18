@@ -41,16 +41,20 @@
               <li>
                 <ul>
                   <li class="content_item" v-for="(item, index) in socialNews" :key="index" v-show="msgBoxType == 0">
-                    <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
-                    <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
+                    <router-link :to="{path: '/NewsDetail', query: {id:item.ArticleId}}">
+                      <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
+                      <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
+                    </router-link>
                   </li>
                 </ul>
               </li>
               <li>
                 <ul>
                   <li class="content_item" v-for="(item, index) in notifiy" :key="index" v-show="msgBoxType == 1">
-                    <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
-                    <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
+                    <router-link :to="{path: '/NewsDetail', query: {id:item.ArticleId}}">
+                      <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
+                      <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
+                    </router-link>
                   </li>
                 </ul>
               </li>
@@ -178,16 +182,16 @@
               </div>
             </div>
             <div class="teachersList_content">
-              <div></div>
-              <ul>
-                <li>
-                  <a href="javascript:;">
-                    <img src="" alt="">
-                    <p></p>
-                  </a>
-                </li>
-              </ul>
-              <div></div>
+              <swiper :options="swiperOption" ref="mySwiper"  v-if="teacherList.length > 0" >
+                <swiper-slide v-for="(item, index) in teacherList" :key="index">
+                  <router-link :to="{path: '/NewsDetail', query: {id: item.ArticleId}}">
+                    <img :src="item.ArticleImg" alt="">
+                  </router-link>
+                  <p class="name">{{item.ArticleTitle}}</p>
+                </swiper-slide>
+              </swiper>
+              <div class="swiper-button-prev" slot="button-prev"><img src="../assets/msfcleft.jpg" alt=""></div>
+              <div class="swiper-button-next" slot="button-next"><img src="../assets/msfcright.jpg" alt=""></div>
             </div>
           </div>
           <div class="conveniencePeople">
@@ -248,7 +252,7 @@
         <div class="ho_content">
           <ul ref="rollpart" @mouseenter="rollStop()" @mouseleave="rollStart()">
             <li v-for="(item, index) in scrollList" :key="index">
-              <a href="javascript:;">
+              <a :href= "`http://www.zsxxnet.cn/hall/Pro_Detail.aspx?id=${item.Id}`" >
                 <img :src="item.Image" alt="">
               </a>
               <p class="home_hc_title" v-text="item.ProductionName"></p>
@@ -498,45 +502,22 @@ export default {
           times: 844
         }
       ],
-      teacherList: [
-        {
-          Img: require('../assets/teacher1.jpg'),
-          Name: '陈乃林'
-        },
-        {
-          Img: require('../assets/teacher2.jpg'),
-          Name: '叶忠海'
-        },
-        {
-          Img: require('../assets/teacher3.jpg'),
-          Name: '邵志华'
-        },
-        {
-          Img: require('../assets/teacher4.jpg'),
-          Name: '杜峥嵘'
-        },
-        {
-          Img: require('../assets/teacher5.jpg'),
-          Name: '陈  默'
-        },
-      ],
+      teacherList: [],
       timer: '',
       swiperOption: {
-        notNextTick: true,
-        speed: 1000, // 滚动速度
-        setWrapperSize: true,
-        // freeMode: true,// true则是自由模式，不会自动贴合滑动位置
+        slidesPerView: 4,
+        spaceBetween: 3,
+        centeredSlides: false,
+        loop: true,
         autoplay: {
-          delay:10,
-          autoplayDisableOnInteraction: false
+          delay: 4000,
+          disableOnInteraction: false
         },
-        // touchStartPreventDefault : false,
-        // touchStartForcePreventDefault: false,
-        loop:true, // 循环
-      　observer:true, // 修改swiper自己或子元素时，自动初始化swiper 
-　　    observeParents:true, // 修改swiper的父元素时，自动初始化swiper  
-        spaceBetween:4, // slide之间的距离（单位px）
-        slidesPerView:5 // slide可见数量
+        // autoplay: true,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
       }
     }
   },
@@ -550,6 +531,7 @@ export default {
     this.getArticleInfoList()
     this.getArticleInfoList2()
     this.getArticleInfoList3()
+    this.getArticleInfoList4()
     this.getCourseCategoryWithCourse()
     this.getProductionInfoList()
   },
@@ -661,6 +643,19 @@ export default {
       })
       if (data.IsSuccess) {
         this.socityFamily = data.Data.List
+      }
+    },
+    // 名师风采
+    async getArticleInfoList4 () {
+      let data = await GetArticleInfoList ({
+        CategoryId: 160,
+        Page: 1,
+        Sort: 'Id',
+        Order: 'desc',
+        Rows: 7
+      })
+      if (data.IsSuccess) {
+        this.teacherList = data.Data.List
       }
     },
     //  课程频道及列表
@@ -1087,6 +1082,39 @@ export default {
               padding-right: 8px;
             }
           }
+          .teachersList_content{
+            position: relative;
+            .swiper-container{
+              margin: 10px auto 0;
+              width: 248px;
+            }
+            .swiper-wrapper{
+              .swiper-slide{
+                width: 56px;
+                height: 69px;
+                a{
+                  img{
+                    width: 56px;
+                    height: 69px;
+                  }
+                }
+              }
+            }
+            .swiper-button-prev{
+              background: none;
+              margin-top: -38px;
+              width: auto;
+              position: absolute;
+              left: 5px;
+            }
+            .swiper-button-next{
+              background: none;
+              margin-top: -38px;
+              width: auto;
+              position: absolute;
+              right: 5px;
+            }
+          }
         }
         .conveniencePeople{
           background: #fff;
@@ -1254,17 +1282,6 @@ export default {
               font-size: 12px;
               margin-top: 8px;
               color: #989898; 
-            }
-          }
-        }
-        .swiper-wrapper{
-          transition-timing-function: linear;
-          .swiper-slide{
-            a{
-              img{
-                width: 180px; 
-                height: 150px;
-              }
             }
           }
         }
