@@ -33,8 +33,7 @@
               <a href="javascript:;" :class="{ 'title_active': msgBoxType == 1 }" @mouseenter="titleTypeChange(1)">通知公告</a>
             </div>
             <div class="nt_right">
-              <router-link :to="{path: '/NewsList', query: {Id: 135}}" v-if="this.msgBoxType == 0">更多</router-link>
-              <router-link :to="{path: '/NewsList', query: {Id: 139}}" v-else>更多</router-link>
+              <a href="javascript:;" @click="LinkToNewsList">更多</a>
             </div>
           </div>
           <div class="content_list">
@@ -42,7 +41,7 @@
               <li>
                 <ul>
                   <li class="content_item" v-for="(item, index) in socialNews" :key="index" v-show="msgBoxType == 0">
-                    <router-link :to="{path: '/NewsDetail', query: {id:item.ArticleId}}">
+                    <router-link :to="{ path: '/newsdetail', query: { id: item.ArticleId, mid: item.ArticleChannel } }">
                       <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
                       <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
                     </router-link>
@@ -52,7 +51,7 @@
               <li>
                 <ul>
                   <li class="content_item" v-for="(item, index) in notifiy" :key="index" v-show="msgBoxType == 1">
-                    <router-link :to="{path: '/NewsDetail', query: {id:item.ArticleId}}">
+                    <router-link :to="{ path: '/newsdetail', query: { id: item.ArticleId, mid: item.ArticleChannel } }">
                       <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
                       <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
                     </router-link>
@@ -469,7 +468,14 @@ export default {
   },
   methods: {
     bannerLink (Id, Mid) {
-      this.$router.push({ path: '/newsdetail', query: { id: Id, mid: Mid} })
+      this.$router.push({ path: '/newsdetail', query: { id: Id, mid: Mid } })
+    },
+    LinkToNewsList () {
+      if (this.msgBoxType == 0) {
+        this.$router.push({ path: '/newslist', query: { Id: 135 } })
+      } else {
+        this.$router.push({ path: '/newslist', query: { Id: 139 } })
+      }
     },
     change (now, pre) {
       this.$refs.indicatorItem.forEach(item => {
@@ -561,7 +567,6 @@ export default {
         Order: 'desc',
         Rows: 9
       })
-      // console.log(data)
       if (data.IsSuccess) {
         this.socialNews = data.Data.List
       }

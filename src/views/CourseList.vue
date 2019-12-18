@@ -24,7 +24,9 @@
                                         <no-data-img :src="item.Image"></no-data-img>
                                     </div>
                                     <div class="title-text l">
-                                        <p class="title-text1" @click="flChannelClick(item, channelList)" :class="{active:item.state=='open'}">{{item.text}}</p>
+                                        <router-link :to="{ path: '/courselist', query: { title: item.text } }">
+                                            <p class="title-text1" :class="{active:item.state=='open'}">{{item.text}}</p>
+                                        </router-link>
                                     </div>
                                 </div>
                                 <template v-if="item.children">
@@ -124,6 +126,7 @@ export default {
             totalPageNumber: 0,
             currentPage: 1,
             ctitle: this.$route.query.title ? this.$route.query.title : '',
+            keyWords: this.$route.query.keyWords ? this.$route.query.keyWords : '',
             typeforsearch: [ // 课程类型数组
                 {
                     typeIcon: require('../assets/per-icongray3.png'),
@@ -162,7 +165,6 @@ export default {
             item.state = 'open'
             this.channelId = item.id
             this.ctitle = item.text
-            this.$router.push({ path: '/courselist', query: { title: this.ctitle } })
             this.getCourseList()
         },
         slChannelClick (item, menu) {
@@ -195,7 +197,8 @@ export default {
                 rows: this.rows,
                 sort: this.desc, 
                 order: 'desc',
-                channelId: this.channelId
+                channelId: this.channelId,
+                title: this.keyWords
             })
             let arr1 = data.ListData.map((item) => {
                 item.shadowShow = false
@@ -232,9 +235,44 @@ export default {
         }
     },
     watch: {
-        ctitle (value) {
-            console.log(111)
-            this.getCourseList()
+        $route (value) {
+            if (!this.$route.query.title && !this.$route.query.keyWords) {
+                console.log(111)
+                this.channelId = 0
+                this.ctitle = ''
+                this.channelList = []
+                this.videoList = []
+                this.getCourseChannel()
+                this.page = 1
+                return false
+            } else if (!this.$route.query.title && this.$route.query.keyWords){
+                this.keyWords = this.$route.query.keyWords
+                this.videoList = []
+                this.ctitle = ''
+                this.channelId = 0
+                this.page = 1
+                this.channelList.forEach((itemf) => {
+                    itemf.state = closed
+                    let itemChildren = itemf.children || []
+                    itemChildren.forEach((itemC) => {
+                        this.$set(itemC, 'isClick', false)
+                    })
+                })
+                this.getCourseList()
+            } else if (!this.$route.query.keyWords && this.$route.query.title){
+                this.keyWords = ''
+                this.ctitle = this.$route.query.title
+                this.videoList = []
+                this.page = 1
+                let Obj = null
+                this.channelList.forEach(item => {
+                    if (item.text == this.ctitle) {
+                        Obj = item
+                    }
+                })
+                this.flChannelClick(Obj, this.channelList)
+            }
+
         }
     },
     components: {

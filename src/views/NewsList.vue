@@ -115,6 +115,7 @@ export default {
             totalPageNumber: 0,
             page: '1',
             rows: 12,
+            keyword: this.$route.query.keyWords ? this.$route.query.keyWords : ''
         }
     },
     mounted () {
@@ -139,11 +140,8 @@ export default {
             })
             item.isClick = true
             // this.$set(item,'isClick', true)
-            this.CategoryId = item.Id
+            this.$router.push({ path: '/newslist', query: { Id: item.Id } })
             this.articleList = []
-            this.startDate = ''
-            this.endDate = ''
-            this.keyword = ''
             this.page = 1
             this.getArticleInfoList()
         },
@@ -151,12 +149,13 @@ export default {
             this.menuData.forEach(item => {
                 if (item.Id == this.CategoryId) {
                     item.isClick = true
+                } else {
+                    item.isClick = false
                 }
             })
         },
         async getNoticeCategory () {
             let data = await NoticeCategory({ parentId: 0 })
-            console.log(data)
             if (data.IsSuccess) {
                 this.menuData2 = data.Data.ListData
             }
@@ -177,6 +176,20 @@ export default {
                 this.totalPageNumber = Number(data.Data.TotalCount)
             }
         },
+    },
+    watch: {
+        $route (value) {
+            this.articleList = []
+            if (this.$route.query.keyWords && !this.$route.query.Id){
+                this.keyword = this.$route.query.keyWords
+                this.CategoryId = 134
+                this.getArticleInfoList()
+                this.getArticleChannelInfoList()
+            } else if (!this.$route.query.keyWords && this.$route.query.Id) {
+                this.CategoryId = this.$route.query.Id
+                this.keyword = ''
+            }
+        }
     },
     components: {
         headerFix,
