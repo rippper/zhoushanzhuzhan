@@ -14,9 +14,9 @@
           </div>
           <el-carousel :interval="5000" arrow="never" indicator-position="none" height="208px" ref="carousel" @change="((now, pre) => { change(now, pre) })">
             <el-carousel-item v-for="(item, index) in bannerImg" :key="index">
-              <div class="bannerItem">
-                <img :src="item.Img" alt="">
-                <div class="bannerDetail" v-text="item.Detail"></div>
+              <div class="bannerItem" @click="bannerLink(item.ArticleId, item.ArticleChannel)">
+                <img :src="item.ArticleImg" alt="">
+                <div class="bannerDetail" v-text="item.ArticleTitle"></div>
               </div>
             </el-carousel-item>
           </el-carousel>
@@ -40,7 +40,7 @@
             <ul>
               <li>
                 <ul>
-                  <li class="content_item" v-for="(item, index) in socialNews" :key="index" v-show="msgBoxType == 0">
+                  <li class="content_item" v-for="(item, index) in socialNews" :key="index" v-show="msgBoxType == 0" @click="bannerLink(item.ArticleId, item.ArticleChannel)">
                     <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
                     <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
                   </li>
@@ -48,7 +48,7 @@
               </li>
               <li>
                 <ul>
-                  <li class="content_item" v-for="(item, index) in notifiy" :key="index" v-show="msgBoxType == 1">
+                  <li class="content_item" v-for="(item, index) in notifiy" :key="index" v-show="msgBoxType == 1" @click="bannerLink(item.ArticleId, item.ArticleChannel)">
                     <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
                     <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
                   </li>
@@ -84,7 +84,7 @@
                 </li>
                 <li>
                   <img src="../assets/list_icon3.png" alt="">
-                  <a href="javascript:;">我的收藏</a>
+                  <router-link to="/personalcenter/personalcollect/personalcolcourse">我的收藏</router-link>
                 </li>
                 <li>
                   <img src="../assets/list_icon4.png" alt="">
@@ -110,9 +110,9 @@
             <div class="ranklist_title">
               <div class="rt_left">排行榜</div>
               <div class="rt_right">
-                <span class="rank_titlebtn"><a href="javascript:;" :class="{ 'rank_active': rankType == 0 }" @mouseenter="rankTypeChange(0)">社区学习</a></span> /
-                <span class="rank_titlebtn"><a href="javascript:;" :class="{ 'rank_active': rankType == 1 }" @mouseenter="rankTypeChange(1)">学校学习</a></span> /
-                <span class="rank_titlebtn"><a href="javascript:;" :class="{ 'rank_active': rankType == 2 }" @mouseenter="rankTypeChange(2)">课程排行</a></span>
+                <span class="rank_titlebtn"><a href="http://www.zsxxnet.cn/rank/UserGroupRank.aspx" :class="{ 'rank_active': rankType == 0 }" @mouseenter="rankTypeChange(0)">社区学习</a></span> /
+                <span class="rank_titlebtn"><a href="http://www.zsxxnet.cn/rank/SchoolRank.aspx" :class="{ 'rank_active': rankType == 1 }" @mouseenter="rankTypeChange(1)">学校学习</a></span> /
+                <span class="rank_titlebtn"><a href="http://www.zsxxnet.cn/rank/CourseRank.aspx" :class="{ 'rank_active': rankType == 2 }" @mouseenter="rankTypeChange(2)">课程排行</a></span>
               </div>
             </div>
             <div class="ranklist_content">
@@ -228,7 +228,7 @@
       <div class="home_ad">
           <ul>
               <li :class="{'ad_action': item.jugment}" v-for="(item, index) in advpart" :key="index">
-                  <a href="javascript:;">
+                  <a href="http://www.zsxxnet.cn/education/index.aspxx">
                       <img :src="item.Image" alt="">
                   </a>
               </li>
@@ -240,7 +240,7 @@
             网上展厅
           </div>
           <div class="ho_title_right">
-            <a href="javascript:;">
+            <a href="http://www.zsxxnet.cn/hall/Pro_More.aspx">
               <img src="../assets/cg_more.png" alt="">
             </a>
           </div>
@@ -255,15 +255,6 @@
               <p class="home_hc_author">作者：<span v-text="item.AuthorName"></span></p>
             </li>
           </ul>
-          <!-- <swiper :options="swiperOption" ref="mySwiper" class="swiper-no-swiping" v-if="scrollList.length > 0" @mouseenter.native="on_swiper_enter" @mouseleave.native="on_swiper_leave">
-            <swiper-slide v-for="(item, index) in scrollList" :key="index">
-              <a href="javascript:;">
-                <img :src="item.Image" alt="">
-              </a>
-              <p class="home_hc_title" v-text="item.ProductionName"></p>
-              <p class="home_hc_author">作者：<span v-text="item.AuthorName"></span></p>
-            </swiper-slide>
-          </swiper> -->
         </div>
       </div>
     </div>
@@ -296,88 +287,16 @@
 import { headerFix, footerFix, homeMessageBox, errorImage } from '../components'
 import { mapActions, mapState } from 'vuex'
 import { GetArticleInfoList, CourseCategoryWithCourse, ProductionInfoList } from '../service/getData'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import { wordsL } from '../service/helpPlugin'
 export default {
   name: 'home',
   data () {
     return {
-      bannerImg: [
-        {
-          Img: require('../assets/home_banner1.jpg'),
-          Detail: '舟山蓉浦学院喜获2019年全国...'
-        },
-        {
-          Img: require('../assets/home_banner2.jpg'),
-          Detail: '舟山蓉浦学院喜获2019年全国...'
-        },
-        {
-          Img: require('../assets/home_banner3.jpg'),
-          Detail: '舟山蓉浦学院喜获2019年全国...'
-        }
-      ],
+      bannerImg: [],
       msgBoxType: 0,
       socialNews: [],
       notifiy: [],
-      articleCommed:[
-        {
-          Img: require('../assets/hl_oldManEdu.png'),
-          articleList: [
-            {
-              ArticleName: '老年人家庭角色的改变'
-            },
-            {
-              ArticleName: '老年心理与健康（01）'
-            },
-            {
-              ArticleName: '说不完的婆婆和媳妇'
-            }
-          ]
-        },
-        {
-          Img: require('../assets/hl_familyedu.png'),
-          articleList: []
-        },
-        {
-          Img: require('../assets/hl_restLife.jpg'),
-          articleList: []
-        },
-        {
-          Img: require('../assets/hl_moneymanage.jpg'),
-          articleList: []
-        },
-        {
-          Img: require('../assets/hl_culture.jpg'),
-          articleList: []
-        },
-        {
-          Img: require('../assets/hl_work.png'),
-          articleList: []
-        },
-        {
-          Img: require('../assets/hl_training.jpg'),
-          articleList: []
-        },
-        {
-          Img: require('../assets/hl_oecomonic.png'),
-          articleList: []
-        },
-        {
-          Img: require('../assets/hl_preedu.jpg'),
-          articleList: []
-        },
-        {
-          Img: require('../assets/hl_inovate.png'),
-          articleList: []
-        },
-        {
-          Img: require('../assets/hl_peoplelife.jpg'),
-          articleList: []
-        },
-        {
-          Img: require('../assets/hl_fishmantraining.png'),
-          articleList: []
-        }
-      ],
+      articleCommed:[],
       rankType: 0,
       advpart: [
         {
@@ -520,24 +439,7 @@ export default {
           Name: '陈  默'
         },
       ],
-      timer: '',
-      swiperOption: {
-        notNextTick: true,
-        speed: 1000, // 滚动速度
-        setWrapperSize: true,
-        // freeMode: true,// true则是自由模式，不会自动贴合滑动位置
-        autoplay: {
-          delay:10,
-          autoplayDisableOnInteraction: false
-        },
-        // touchStartPreventDefault : false,
-        // touchStartForcePreventDefault: false,
-        loop:true, // 循环
-      　observer:true, // 修改swiper自己或子元素时，自动初始化swiper 
-　　    observeParents:true, // 修改swiper的父元素时，自动初始化swiper  
-        spaceBetween:4, // slide之间的距离（单位px）
-        slidesPerView:5 // slide可见数量
-      }
+      timer: ''
     }
   },
   mounted () {
@@ -547,6 +449,7 @@ export default {
     }, 5000)
     this.rollStart()
     window.addEventListener('scroll', this.getDistance)
+    this.render()
     this.getArticleInfoList()
     this.getArticleInfoList2()
     this.getArticleInfoList3()
@@ -556,9 +459,13 @@ export default {
   beforeDestroy () {
     clearInterval(this.advRobot)
     clearInterval(this.rollpartRobot)
+    clearInterval(this.timer)
     window.removeEventListener('scroll', this.getDistance)
   },
   methods: {
+    bannerLink (Id, Mid) {
+      this.$router.push({ path: '/newsdetail', query: { id: Id, mid: Mid} })
+    },
     change (now, pre) {
       this.$refs.indicatorItem.forEach(item => {
         item.style.background = "#fff"
@@ -624,6 +531,22 @@ export default {
         }
       }, 10)
     },
+    // 首页bannner
+    async render () {
+      let swiperMsg = await GetArticleInfoList({
+        CategoryId: 138,
+        Page: 1,
+        Rows: 3,
+        Sort: 'Id',
+        Order: 'desc'
+      })
+      if (swiperMsg.IsSuccess) {
+        swiperMsg.Data.List.forEach((item, index) => {
+          item.ArticleTitle = wordsL(item.ArticleTitle, 14) 
+        })
+        this.bannerImg = swiperMsg.Data.List
+      }
+    },
     // 社交新闻
     async getArticleInfoList () {
       let data = await GetArticleInfoList ({
@@ -631,8 +554,9 @@ export default {
         Page: 1,
         Sort: 'Id',
         Order: 'desc',
-        Rows: 7
+        Rows: 9
       })
+      // console.log(data)
       if (data.IsSuccess) {
         this.socialNews = data.Data.List
       }
@@ -644,7 +568,7 @@ export default {
         Page: 1,
         Sort: 'Id',
         Order: 'desc',
-        Rows: 7
+        Rows: 9
       })
       if (data.IsSuccess) {
         this.notifiy = data.Data.List
@@ -672,7 +596,7 @@ export default {
         Rows: 12
       })
       this.articleCommed = data.ListData
-      console.log(this.articleCommed, 999)
+      // console.log(this.articleCommed, 999)
     },
     // 网上展厅
     async getProductionInfoList () {
@@ -684,18 +608,9 @@ export default {
         Order: 'desc'
       })
       if (data.IsSuccess) {
-        this.scrollList = data.Data.List
-        this.scrollList = this.scrollList.concat(this.scrollList) 
+        this.scrollList = data.Data.List.concat(data.Data.List) 
       }
     }
-    // on_swiper_enter () {
-    //     console.log(this.$refs.mySwiper)
-    //     this.$refs.mySwiper.swiper.autoplay.stop()
-    // },
-    // on_swiper_leave () {
-    //     this.$refs.mySwiper.swiper.autoplay.start()
-    // },
-
   },
   components: {
     headerFix,
@@ -865,9 +780,13 @@ export default {
               @extend %clearFix;
               .ct_left{
                 float: left;
-                font-family: 宋体;
+                font-family: '宋体';
                 color: Black;
                 font-size: 12px;
+                cursor: pointer;
+                &:hover{
+                  color: #f00;
+                }
               }
               .ct_right{
                 float: right;
@@ -875,6 +794,7 @@ export default {
                 padding-right: 5px;
                 font-family: "黑体", "Arial Narrow";
                 font-size: 12px;
+                cursor: pointer;
               }
             }
           }

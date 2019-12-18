@@ -3,20 +3,20 @@
         <div class="personal_backgroundshadow" v-show="perWindow" @click.self="checkFinish()">
             <div class="personal_notechangebox" v-show="perNoteBox">
                 <div class="personal_notechangetop">
-                <img src="../assets/per-rewritewhite.png" alt="">
-                <span>修改笔记</span>
+                    <img src="../assets/per-rewritewhite.png" alt="">
+                    <span>修改笔记</span>
                 </div>
                 <div class="personal_lesson clearFix">
-                <span class="personal_redicon"></span>
-                <span>课程:</span>
-                <span v-text="perNoteForLesson"></span>
+                    <span class="personal_redicon"></span>
+                    <span>课程:</span>
+                    <span v-text="perNoteForLesson"></span>
                 </div>
                 <div class="personal_notechange">
                 <p>
                     笔记<span>标题</span>
                     <span class="personal_notechange_titlelimit"><span v-text="noteLabel_forChange.length" ref="waringtitle"></span>/25</span>
                 </p>
-                <input type="text" v-model="noteLabel_forChange" ref="noteLabel" @input="wordsLimit('noteLabel_forChange','waringtitle', 25)">
+                    <input type="text" v-model="noteLabel_forChange" ref="noteLabel" @input="wordsLimit('noteLabel_forChange','waringtitle', 25)">
                 <p>
                     笔记<span>正文</span>
                     <span class="personal_notechange_contentlimit"><span v-text="noteInfor_forChange.length" ref="waringcontent"></span>/250</span>
@@ -24,70 +24,70 @@
                 <textarea cols="30" rows="10" v-model="noteInfor_forChange" ref="noteContent" @input="wordsLimit('noteInfor_forChange', 'waringcontent', 250)"></textarea>
                 </div>
                 <div class="personal_buttondepart">
-                <button class="personal_reslove" type="button" @click="noteSubmit()">确认</button>
-                <button class="personal_reject" type="button" @click.self="checkFinish()">取消</button>
+                    <button class="personal_reslove" type="button" @click="noteSubmit()">确认</button>
+                    <button class="personal_reject" type="button" @click.self="checkFinish()">取消</button>
                 </div>
             </div>
             <div class="personal_planchangebox" v-if="perPlanBox">
                 <div class="personal_planchangetop">
-                <img src="../assets/per-rewritewhite.png" alt="">
-                <span><span v-text="planAddOrChange"></span>计划</span>
+                    <img src="../assets/per-rewritewhite.png" alt="">
+                    <span><span v-text="planAddOrChange"></span>计划</span>
                 </div>
                 <div class="personal_planchangebody">
-                <p class="personal_coursename">课程<span>名称</span></p>
-                <div class="personal_coursebox">
-                    <span class="personal_courseinname" v-text="planCourseName"></span>
-                    <div class="personal_counameright">
-                    <span class="personal_starname"><span class="personal_courseimg"></span>学分：</span><span v-text="planCredit"></span>
-                    <button type="button" class="personal_gostudy" @click="linkToCourse(planCourseID)">去学习</button>
+                    <p class="personal_coursename">课程<span>名称</span></p>
+                    <div class="personal_coursebox">
+                        <span class="personal_courseinname" v-text="planCourseName"></span>
+                        <div class="personal_counameright">
+                            <span class="personal_starname"><span class="personal_courseimg"></span>学分：</span><span v-text="planCredit"></span>
+                            <button type="button" class="personal_gostudy" @click="linkToCourse(planCourseID)">去学习</button>
+                        </div>
                     </div>
-                </div>
-                <p class="personal_coursename">学习<span>计划</span></p>
-                <div>
-                    <span class="personal_plandata">计划开始日期：</span>
-                    <el-date-picker
-                    v-model="planStartTime_forChange"
-                    type="date"
-                    ref="planStartTime"
-                    popper-class="start_time"
-                    placeholder="选择日期">
-                    </el-date-picker>
-                    <span class="personal_plandata">计划完成日期：</span>
-                    <el-date-picker
-                    v-model="planFinishTime_forChange"
-                    type="date"
-                    ref="planEndTime"
-                    popper-class="finish_time"
-                    placeholder="选择日期">
-                    </el-date-picker>
-                </div>
-                <div class="personal_attention">
-                    <div class="personal_attentiontime">
-                    <p class="personal_coursename">提醒<span>周期</span></p>
+                    <p class="personal_coursename">学习<span>计划</span></p>
                     <div>
-                        <img src="../assets/per-checkout.png" alt="" v-show="planAwakePeriod == 1 ? 1 : 0" @click="SET_PLANAWAKEPERIOD(0)">
-                        <img src="../assets/per-check.png" alt="" v-show="planAwakePeriod == 0 ? 1 : 0">
-                        <span>每天提醒</span>
-                        <img src="../assets/per-checkout.png" alt="" v-show="planAwakePeriod == 0 ? 1 : 0" @click="SET_PLANAWAKEPERIOD(1)">
-                        <img src="../assets/per-check.png" alt="" v-show="planAwakePeriod == 1 ? 1 : 0">
-                        <span>每周提醒</span>
+                        <span class="personal_plandata">计划开始日期：</span>
+                        <el-date-picker
+                        v-model="planStartTime_forChange"
+                        type="date"
+                        ref="planStartTime"
+                        popper-class="start_time"
+                        placeholder="选择日期">
+                        </el-date-picker>
+                        <span class="personal_plandata">计划完成日期：</span>
+                        <el-date-picker
+                        v-model="planFinishTime_forChange"
+                        type="date"
+                        ref="planEndTime"
+                        popper-class="finish_time"
+                        placeholder="选择日期">
+                        </el-date-picker>
                     </div>
+                    <div class="personal_attention">
+                        <div class="personal_attentiontime">
+                        <p class="personal_coursename">提醒<span>周期</span></p>
+                        <div>
+                            <img src="../assets/per-checkout.png" alt="" v-show="planAwakePeriod == 1 ? 1 : 0" @click="SET_PLANAWAKEPERIOD(0)">
+                            <img src="../assets/per-check.png" alt="" v-show="planAwakePeriod == 0 ? 1 : 0">
+                            <span>每天提醒</span>
+                            <img src="../assets/per-checkout.png" alt="" v-show="planAwakePeriod == 0 ? 1 : 0" @click="SET_PLANAWAKEPERIOD(1)">
+                            <img src="../assets/per-check.png" alt="" v-show="planAwakePeriod == 1 ? 1 : 0">
+                            <span>每周提醒</span>
+                        </div>
+                        </div>
+                        <div class="personal_attentionway">
+                            <p class="personal_coursename">提醒<span>方式</span></p>
+                            <div>
+                                <img src="../assets/per-checkout.png" alt="" v-show="planAwakeWay == 1 ? 1 : 0">
+                                <img src="../assets/per-check.png" alt="" v-show="planAwakeWay == 0 ? 1 : 0">
+                                <span>站内信</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="personal_attentionway">
-                    <p class="personal_coursename">提醒<span>方式</span></p>
-                    <div>
-                        <img src="../assets/per-checkout.png" alt="" v-show="planAwakeWay == 1 ? 1 : 0">
-                        <img src="../assets/per-check.png" alt="" v-show="planAwakeWay == 0 ? 1 : 0">
-                        <span>站内信</span>
+                    <div class="personal_buttonpart">
+                        <div class="personal_toright">
+                        <button type="button" @click="planSubmit()">提交</button>
+                        <button type="button" @click="checkFinish()">取消</button>
+                        </div>
                     </div>
-                    </div>
-                </div>
-                <div class="personal_buttonpart">
-                    <div class="personal_toright">
-                    <button type="button" @click="planSubmit()">提交</button>
-                    <button type="button" @click="checkFinish()">取消</button>
-                    </div>
-                </div>
                 </div>
             </div>
             <headUpload v-show="perHeadBox" :refleash="render"></headUpload>
@@ -130,7 +130,7 @@
                     <div class>
                     <div class="pull-left">
                         <button class="per_check" type="button" @click="linkToMyExam()">成绩查询</button>
-                        <a class="per_tocenter" v-if="perInfor.Type == 'Admin'" href="http://test46.jy365.net/admin">后台管理中心</a>
+                        <a class="per_tocenter" v-if="perInfor.Type == 'Admin'" href="javascript:;">后台管理中心</a>
                     </div>
                     <div class="per_flxed pull-right">
                         <ul class="clearFix">
@@ -253,7 +253,11 @@ export default {
         },
         stopmove (event) {
             let evt = window.event || event
-            evt.preventDefault()
+            if(event){
+                evt.preventDefault()
+            }else{
+                window.event.returnValue = false
+            }
         },
         linkToCourse (courseId) {
             const { href } = this.$router.resolve({ path: '/courseDetail', query: { id: courseId } })
@@ -430,6 +434,9 @@ export default {
 <style lang="scss">
 @import '../style/mixin';
 .personalCenter{
+    max-width: 1440px;
+    width: 100%;
+    margin:0 auto;
     background: url('../assets/bd_background.png') no-repeat;
     .personal_backgroundshadow{
         width:100%;

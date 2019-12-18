@@ -1,11 +1,11 @@
 <template>
     <div class="homemessagebox">
-        <a class="pic_Img" href="javascript:;">
+        <a class="pic_Img" href="javascript:;" @click="LinkToCourselist()">
             <img :src="articleModel.Image" alt="">
         </a>
         <ul>
             <li v-for="(item, index) in articleModel.Course" :key="index">
-                <a href="javascript:;">{{'·' + item.Name | wordLimit(15)}}</a>
+                <a href="javascript:;" @click="LinkToCourseDetail(item.Id)">{{'·' + item.Name | wordLimit(15)}}</a>
             </li>
         </ul>
     </div>
@@ -20,7 +20,12 @@ export default {
         }
     },
     methods: {
-
+        LinkToCourselist () {
+            this.$router.push({ path: '/courselist', query: {title: this.articleModel.text} })
+        },
+        LinkToCourseDetail (Id) {
+            this.$router.push({ path: '/coursedetail', query: { id: Id } })
+        }
     }
 }
 </script>

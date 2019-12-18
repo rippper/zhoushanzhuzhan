@@ -11,6 +11,7 @@ const File = '/File'
 const CourseProcess = '/CourseProcess'
 const Article = '/article'
 const Production = '/production'
+const Portal = '/portal'
 // const Collection = '/Collection'
 export default {
   // 检查用户登录状态
@@ -221,5 +222,5 @@ export default {
   NoteUpdate: {
     url: API_URL + Course + '/NoteUpdate',
     data: {}
-  },
+  }
 }

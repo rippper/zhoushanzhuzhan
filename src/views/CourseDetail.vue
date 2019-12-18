@@ -183,6 +183,9 @@ export default {
 <style lang="scss">
 @import '../style/mixin';
 .CourseDetail{
+    max-width: 1440px;
+    width: 100%;
+    margin:0 auto;
     background: url('../assets/bd_background.png') no-repeat;
     .main{
         width: 1000px;

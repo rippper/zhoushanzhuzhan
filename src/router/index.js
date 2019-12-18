@@ -40,7 +40,7 @@ const routes = [
   {
     path: '/courselist',
     name: 'courselist',
-    meta: { title: '课程列表' },
+    meta: { title: '课程列表', isSkip: true },
     component: CourseList
   },
   {
@@ -58,7 +58,7 @@ const routes = [
   {
     path: '/newslist',
     name: 'newslist',
-    meta: { title: '新闻列表' },
+    meta: { title: '新闻列表', isSkip: true },
     component: NewsList
   },
   {

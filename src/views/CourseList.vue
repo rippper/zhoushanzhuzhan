@@ -231,6 +231,12 @@ export default {
             this.getCourseList()
         }
     },
+    watch: {
+        ctitle (value) {
+            console.log(111)
+            this.getCourseList()
+        }
+    },
     components: {
         headerFix,
         footerFix,
@@ -245,6 +251,9 @@ export default {
 <style lang="scss">
 @import '../style/mixin';
 .CourseList{
+    max-width: 1440px;
+    width: 100%;
+    margin:0 auto;
     background: url('../assets/bd_background.png') no-repeat;
     .main{
         width: 1000px;
