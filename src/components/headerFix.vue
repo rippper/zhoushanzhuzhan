@@ -194,7 +194,7 @@
               <el-option label="搜索课程" value="1"></el-option>
               <el-option label="搜索文章" value="2"></el-option>
             </el-select>
-            <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="searcher()"></el-button>
           </el-input>
         </div>
       </div>
@@ -269,6 +269,25 @@ export default {
         }
         if (!this.$route.meta.isSkip) {
           this.$router.push({ path: '/login' })
+        }
+      },
+      searcher () {
+        if (this.select == '') {
+          this.$message.warning('请先选择搜索类型！')
+          return false
+        }
+        if (this.select == 1) {
+          if (this.contentInfor == '') {
+            this.$message.warning('请先输入关键字！')
+            return false
+          }
+          this.$router.push({ path: '/courselist', query: { keyWords: this.contentInfor } })
+        } else if (this.select == 2) {
+          if (this.contentInfor == '') {
+            this.$message.warning('请先输入关键字！')
+            return false
+          }
+          this.$router.push({ path: '/newslist', query: { keyWords: this.contentInfor } })
         }
       }
     },

@@ -115,6 +115,7 @@ export default {
             totalPageNumber: 0,
             page: '1',
             rows: 12,
+            keyword: this.$route.query.keyWords ? this.$route.query.keyWords : ''
         }
     },
     mounted () {
@@ -139,11 +140,8 @@ export default {
             })
             item.isClick = true
             // this.$set(item,'isClick', true)
-            this.CategoryId = item.Id
+            this.$router.push({ path: '/newslist', query: { Id: item.Id } })
             this.articleList = []
-            this.startDate = ''
-            this.endDate = ''
-            this.keyword = ''
             this.page = 1
             this.getArticleInfoList()
         },
@@ -181,10 +179,16 @@ export default {
     },
     watch: {
         $route (value) {
-            this.CategoryId = this.$route.query.Id
             this.articleList = []
-            this.getArticleInfoList()
-            this.getArticleChannelInfoList()
+            if (this.$route.query.keyWords && !this.$route.query.Id){
+                this.keyword = this.$route.query.keyWords
+                this.CategoryId = 134
+                this.getArticleInfoList()
+                this.getArticleChannelInfoList()
+            } else if (!this.$route.query.keyWords && this.$route.query.Id) {
+                this.CategoryId = this.$route.query.Id
+                this.keyword = ''
+            }
         }
     },
     components: {
