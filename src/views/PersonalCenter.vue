@@ -124,32 +124,38 @@
                     </div>
                     </div>
                     <div class="per_scoreBox">
-                    <div class="per_score" v-text="perInfor.SumCredit"></div>
-                    <div>学分</div>
+                        <!-- <div class="per_coins">
+                            <div class="per_score" v-text="perInfor.SumCredit"></div>
+                            <div>学习币</div>
+                        </div> -->
+                        <div class="per_scores">
+                            <div class="per_score" v-text="perInfor.SumCredit"></div>
+                            <div>学分</div>
+                        </div>
                     </div>
-                    <div class>
-                    <div class="pull-left">
-                        <button class="per_check" type="button" @click="linkToMyExam()">成绩查询</button>
-                        <a class="per_tocenter" v-if="perInfor.Type == 'Admin'" href="javascript:;">后台管理中心</a>
-                    </div>
-                    <div class="per_flxed pull-right">
-                        <ul class="clearFix">
-                        <li>
-                            <router-link to="/personalCenter/personalPassword" @click="changecolor(0)">
-                            <img src="../assets/per-key.png" alt  v-show="perLaberN[0] == 0 ? 1 : 0">
-                            <img src="../assets/per-keyaction.png" alt  v-show="perLaberN[0] == 1 ? 1 : 0">
-                            <span ref="perPassword">修改密码</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link to="/personalCenter/personalInfor" @click="changecolor(1)">
-                            <img src="../assets/per-write.png" alt="" v-show="perLaberN[1] == 0 ? 1 : 0">
-                            <img src="../assets/per-writeaction.png" alt="" v-show="perLaberN[1] == 1 ? 1 : 0">
-                            <span ref="perInfor">修改资料</span>
-                            </router-link>
-                        </li>
-                        </ul>
-                    </div>
+                    <div>
+                        <div class="pull-left">
+                            <button class="per_check" type="button" @click="linkToMyExam()">成绩查询</button>
+                            <a class="per_tocenter" v-if="perInfor.Type == 'Admin'" href="javascript:;">后台管理中心</a>
+                        </div>
+                        <div class="per_flxed pull-right">
+                            <ul class="clearFix">
+                            <li>
+                                <router-link to="/personalCenter/personalPassword" @click="changecolor(0)">
+                                <img src="../assets/per-key.png" alt  v-show="perLaberN[0] == 0 ? 1 : 0">
+                                <img src="../assets/per-keyaction.png" alt  v-show="perLaberN[0] == 1 ? 1 : 0">
+                                <span ref="perPassword">修改密码</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/personalCenter/personalInfor" @click="changecolor(1)">
+                                <img src="../assets/per-write.png" alt="" v-show="perLaberN[1] == 0 ? 1 : 0">
+                                <img src="../assets/per-writeaction.png" alt="" v-show="perLaberN[1] == 1 ? 1 : 0">
+                                <span ref="perInfor">修改资料</span>
+                                </router-link>
+                            </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -181,7 +187,7 @@
 
 <script>
 import { headerFix, footerFix, headUpload } from '../components'
-import { GetUserInfo, StudyPlanUpdate, StudyPlanAdd, NoteUpdatePost } from '../service/getData'
+import { GetUserInfo, StudyPlanUpdate, StudyPlanAdd, NoteUpdatePost, LoginShort } from '../service/getData'
 import { mapState, mapMutations } from 'vuex'
 export default {
     name: 'PersonalCenter',
@@ -337,6 +343,8 @@ export default {
         },
         async render () {
             let msg = await GetUserInfo()
+            let data = await LoginShort()
+            console.log(data)
             this.perHeadAddress = msg.Model.Avatar
             this.perInfor = msg.Model
         },
@@ -457,123 +465,122 @@ export default {
             background:#fff;
 
             .personal_notechangetop{
-            height:48px;
-            background:#2e6ed0;
-            text-align: center;
-            line-height: 48px;
+                height:48px;
+                background:#2e6ed0;
+                text-align: center;
+                line-height: 48px;
 
-            img{
-                position: relative;
-                bottom:2px;
-            }
+                img{
+                    position: relative;
+                    bottom:2px;
+                }
 
-            span{
-                margin-left:8px;
-                font-size: 16px;
-                color:#fff;
-                font-weight: 500;
-            }
+                span{
+                    margin-left:8px;
+                    font-size: 16px;
+                    color:#fff;
+                    font-weight: 500;
+                }
             }
 
             .personal_lesson{
-            height:64px;
-            background:#efefef;
+                height:64px;
+                background:#efefef;
 
-            span{
-                float: left;
+                span{
+                    float: left;
 
-                &:nth-child(2){
-                width:56px;
-                height:24px;
-                margin-top: 19px;
-                margin-left:8px;
-                text-align: center;
-                font-size: 16px;
-                color:#fff;
-                border-radius: 3px;
-                background: #089ffa;
+                    &:nth-child(2){
+                        width:56px;
+                        height:24px;
+                        margin-top: 19px;
+                        margin-left:8px;
+                        text-align: center;
+                        font-size: 16px;
+                        color:#fff;
+                        border-radius: 3px;
+                        background: #089ffa;
+                    }
 
+                    &:last-child{
+                        margin-left: 8px;
+                        line-height:64px;
+                        color:#565656;
+                    }
                 }
-
-                &:last-child{
-                margin-left: 8px;
-                line-height:64px;
-                color:#565656;
+                .personal_redicon{
+                    width:18px;
+                    height:23px;
+                    margin-top:20px;
+                    margin-left:30px;
+                    background:url('../assets/per-noteimg1.jpg') no-repeat;
                 }
-            }
-            .personal_redicon{
-                width:18px;
-                height:23px;
-                margin-top:20px;
-                margin-left:30px;
-                background:url('../assets/per-noteimg1.jpg') no-repeat;
-            }
             }
 
             .personal_notechange{
-            width:570px;
-            height:361px;
-            margin:20px auto;
+                width:570px;
+                height:361px;
+                margin:20px auto;
 
-            p{
-                font-size: 16px;
-                font-weight: bold;
-                margin-bottom:16px;
-                position: relative;
-                span{
-                color:#2e6ed0;
+                p{
+                    font-size: 16px;
+                    font-weight: bold;
+                    margin-bottom:16px;
+                    position: relative;
+                    span{
+                        color:#2e6ed0;
+                    }
+                    .personal_notechange_titlelimit{
+                        position: absolute;
+                        right: 5px;
+                    }
+                    .personal_notechange_contentlimit{
+                        position: absolute;
+                        right: 5px;
+                    }
                 }
-                .personal_notechange_titlelimit{
-                position: absolute;
-                right: 5px;
-                }
-                .personal_notechange_contentlimit{
-                position: absolute;
-                right: 5px;
-                }
-            }
 
-            input{
-                width:568px;
-                height:38px;
-                border:1px solid #e9e9e9;
-                margin-bottom:20px;
-                padding:0 15px;
-                box-sizing: border-box;
-            }
+                input{
+                    width:568px;
+                    height:38px;
+                    border:1px solid #e9e9e9;
+                    margin-bottom:20px;
+                    padding:0 15px;
+                    box-sizing: border-box;
+                }
 
-            textarea{
-                height:236px;
-                width:568px;
-                border:1px solid #e9e9e9;
-                padding:15px;
-                box-sizing: border-box;
-            }
+                textarea{
+                    height:236px;
+                    width:568px;
+                    border:1px solid #e9e9e9;
+                    padding:15px;
+                    box-sizing: border-box;
+                }
             }
 
             .personal_buttondepart{
 
-            .personal_reslove{
-                margin-left:409px;
-                width:96px;
-                height:36px;
-                background:linear-gradient(to right,#58d7fb,#2cabfa);
-                border:none;
-                border-radius: 36px;
-                color:#fff;
-                font-size:16px;
-                font-weight: bold;
-                cursor:pointer;
-            }
+                .personal_reslove{
+                    margin-left:409px;
+                    width:96px;
+                    height:36px;
+                    background:linear-gradient(to right,#58d7fb,#2cabfa);
+                    border:none;
+                    border-radius: 36px;
+                    color:#fff;
+                    font-size:16px;
+                    font-weight: bold;
+                    cursor:pointer;
+                }
 
-            .personal_reject{
-                margin-left:32px;
-                border:none;
-                font-size:16px;
-                font-weight: bold;
-                background:none;
-                cursor:pointer;
-            }
+                .personal_reject{
+                    margin-left:32px;
+                    border:none;
+                    font-size:16px;
+                    font-weight: bold;
+                    background:none;
+                    cursor:pointer;
+                }
             }
         }
         .personal_planchangebox{
@@ -587,128 +594,128 @@ export default {
             margin:auto;
             background:#fff;
             .personal_planchangetop{
-            height:48px;
-            background: #2e6ed0;
-            text-align: center;
-            line-height:48px;
-            color:#fff;
-            font-size: 16px;
-            img{
-                margin-right:5px;
-            }
+                height:48px;
+                background: #2e6ed0;
+                text-align: center;
+                line-height:48px;
+                color:#fff;
+                font-size: 16px;
+                img{
+                    margin-right:5px;
+                }
             }
             .personal_planchangebody{
-            padding: 0 30px;
-            .personal_coursename{
-                margin-top:20px;
-                margin-bottom:15px;
-                font-size: 16px;
-                font-weight: bold;
-                color:#666;
-                span{
-                color: #2e6ed0;
-                }
-            }
-            .personal_coursebox{
-                @extend %clearFix;
-                height:56px;
-                background: #efefef;
-
-                &::before{
-                content:'';
-                display: inline-block;
-                vertical-align: middle;
-                height: 100%;
-                }
-
-                .personal_counameright{
-                height:56px;
-                margin-right:20px;
-                float:right;
-                &::before{
-                    content:'';
-                    display: inline-block;
-                    vertical-align: middle;
-                    height: 100%;
-                }
-                }
-                .personal_courseinname{
-                margin-right:20px;
-                margin-left:16px;
-                }
-                .personal_courseimg{
-                display: inline-block;
-                width:14px;
-                height:14px;
-                background:url('../assets/per-studystar.png');
-                position: relative;
-                top:3px;
-                margin-right: 6px;
-                }
-                .personal_starname{
-                color:#acacac;
-                }
-                .personal_gostudy{
-                width:68px;
-                height:24px;
-                border-radius: 24px;
-                border:1px solid #f00;
-                color:#f00;
-                margin-left:68px;
-                cursor:pointer;
-                }
-            }
-            .personal_plandata{
-                color:#acacac;
-            }
-            .personal_attention{
-                @extend %clearFix;
-                .personal_attentiontime{
-                    width:50%;
-                    float:left;
-                    img{
-                        margin-right:10px;
-                    }
-                    span{
-                        margin-right:40px;
-                    }
-                }
-                .personal_attentionway{
-                    float:left;
-                    width:50%;
-                    img{
-                        margin-right:10px;
-                    }
-                    span{
-                        margin-right:40px;
-                    }
-                }
-            }
-            .personal_buttonpart{
-                margin-top:40px;
-                @extend %clearFix;
-                .personal_toright{
-                float: right;
-                button{
+                padding: 0 30px;
+                .personal_coursename{
+                    margin-top:20px;
+                    margin-bottom:15px;
+                    font-size: 16px;
                     font-weight: bold;
-                    cursor:pointer;
-                    &:first-of-type{
-                    width:96px;
-                    height:36px;
-                    border-radius: 36px;
-                    background:#2e6ed0;
-                    color:#fff;
-                    border:0;
-                    }
-                    &:last-of-type{
-                    width:96px;
-                    height:36px;
-                    background:#fff;
-                    border:0;
+                    color:#666;
+                    span{
+                        color: #2e6ed0;
                     }
                 }
+                .personal_coursebox{
+                    @extend %clearFix;
+                    height:56px;
+                    background: #efefef;
+
+                    &::before{
+                        content:'';
+                        display: inline-block;
+                        vertical-align: middle;
+                        height: 100%;
+                    }
+
+                    .personal_counameright{
+                        height:56px;
+                        margin-right:20px;
+                        float:right;
+                        &::before{
+                            content:'';
+                            display: inline-block;
+                            vertical-align: middle;
+                            height: 100%;
+                        }
+                    }
+                    .personal_courseinname{
+                        margin-right:20px;
+                        margin-left:16px;
+                    }
+                    .personal_courseimg{
+                        display: inline-block;
+                        width:14px;
+                        height:14px;
+                        background:url('../assets/per-studystar.png');
+                        position: relative;
+                        top:3px;
+                        margin-right: 6px;
+                    }
+                    .personal_starname{
+                        color:#acacac;
+                    }
+                    .personal_gostudy{
+                        width:68px;
+                        height:24px;
+                        border-radius: 24px;
+                        border:1px solid #f00;
+                        color:#f00;
+                        margin-left:68px;
+                        cursor:pointer;
+                    }
                 }
-            }
+                .personal_plandata{
+                    color:#acacac;
+                }
+                .personal_attention{
+                    @extend %clearFix;
+                    .personal_attentiontime{
+                        width:50%;
+                        float:left;
+                        img{
+                            margin-right:10px;
+                        }
+                        span{
+                            margin-right:40px;
+                        }
+                    }
+                    .personal_attentionway{
+                        float:left;
+                        width:50%;
+                        img{
+                            margin-right:10px;
+                        }
+                        span{
+                            margin-right:40px;
+                        }
+                    }
+                }
+                .personal_buttonpart{
+                    margin-top:40px;
+                    @extend %clearFix;
+                    .personal_toright{
+                        float: right;
+                        button{
+                            font-weight: bold;
+                            cursor:pointer;
+                            &:first-of-type{
+                                width:96px;
+                                height:36px;
+                                border-radius: 36px;
+                                background:#2e6ed0;
+                                color:#fff;
+                                border:0;
+                            }
+                            &:last-of-type{
+                                width:96px;
+                                height:36px;
+                                background:#fff;
+                                border:0;
+                            }
+                        }
+                    }
+                }
             }
             .el-date-editor{
                 width:140px;
@@ -819,7 +826,7 @@ export default {
                         color: #c6c6c6;
 
                         span {
-                        color: #363636;
+                            color: #363636;
                         }
                     }
                     .per_ranks {
@@ -830,7 +837,7 @@ export default {
                         color: #c6c6c6;
 
                         span {
-                        color: #363636;
+                            color: #363636;
                         }
                     }
                 }
@@ -844,6 +851,26 @@ export default {
                     right: 30px;
                     top: 20px;
                     box-shadow: 0 0 5px #cecece;
+                    @extend %clearFix;
+                    // .per_coins{
+                    //     width:100px;
+                    //     float: right;
+                    //     &:after{
+                    //         content: '';
+                    //         width: 1px;
+                    //         height: 40px;
+                    //         margin-top: -20px;
+                    //         background: #eee;
+                    //         display: inline-block;
+                    //         position: absolute;
+                    //         top: 50%;
+                    //         left: 89px;
+                    //     }
+                    // }
+                    .per_scores{
+                        width: 89px;
+                        float: left;
+                    }
                     .per_score {
                         height: 64px;
                         line-height: 64px;

@@ -210,6 +210,11 @@ export const NoteUpdate = (data) => fetch.get(Api.NoteUpdate.url,
  */
 export const NoteUpdatePost = (data) => fetch.post(Api.NoteUpdate.url,
   { ...Api.NoteUpdate.data, ...data })
+/**
+ * 获取用户详情信息
+ */
+export const LoginShort = (data) => fetch.post(Api.LoginShort.url,
+  { ...Api.LoginShort.data, ...data })
 /* 将所有的API封装起来 */
 const allApi = {}
 for (let key in Api) {

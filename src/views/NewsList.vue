@@ -132,18 +132,10 @@ export default {
         },
         goMenuList (item, menu) {
             // console.log(item, menu)
-            menu.forEach((itemS) => {
-                // 使用set方法时 不用遍历从接口获得的数据添加isClick set方法可以添加原数组没有的参数且不改变数组
-                // 通过这个添加的参数来进行数据操作
-                // this.$set(itemS,'isClick', false)
-                itemS.isClick = false
-            })
-            item.isClick = true
             // this.$set(item,'isClick', true)
             this.$router.push({ path: '/newslist', query: { Id: item.Id } })
-            this.articleList = []
-            this.page = 1
-            this.getArticleInfoList()
+
+            item.isClick = true
         },
         getArticleChannelInfoList () {
             this.menuData.forEach(item => {
@@ -188,6 +180,19 @@ export default {
             } else if (!this.$route.query.keyWords && this.$route.query.Id) {
                 this.CategoryId = this.$route.query.Id
                 this.keyword = ''
+                this.page = 1
+                this.getArticleInfoList()
+                console.log(this.menuData)
+                console.log(this.CategoryId)
+                this.menuData.forEach((itemS) => {
+                    if (itemS.Id != this.CategoryId) {
+                        console.log(111)
+                        itemS.isClick = false
+                    } else {
+                        console.log(222)
+                        itemS.isClick = true
+                    }  
+                })
             }
         }
     },

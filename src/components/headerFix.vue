@@ -138,13 +138,13 @@
             </ul>
           </li>
           <li>
-            <a href="http://www.zsxxnet.cn/artical/Article_List.aspx?typeid=144">社区教研</a>
+            <router-link :to="{ path: '/newslist', query: { Id: 144 } }">社区教研</router-link>
           </li>
           <li>
             <a href="http://www.zsxxnet.cn/CommHouse.aspx">社区之家</a>
             <ul>
               <li>
-                <a href="http://www.zsxxnet.cn/artical/Article_List.aspx?typeid=140">成果展示</a>
+                <router-link :to="{ path: '/newslist', query: { Id: 140 } }">成果展示</router-link>
               </li>
               <li>
                 <a href="http://www.zsxxnet.cn/zsScene.aspx">舟山风貌</a>

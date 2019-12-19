@@ -222,5 +222,10 @@ export default {
   NoteUpdate: {
     url: API_URL + Course + '/NoteUpdate',
     data: {}
+  },
+  // 获取用户详细信息
+  LoginShort: {
+    url: API_URL + User + '/LoginShort',
+    data: {}
   }
 }
