@@ -662,6 +662,7 @@ export default {
     position: absolute;
     top: 156px;
     left: 20px;
+    z-index: 15;
     overflow: hidden;
     img{
       width: 114px;
