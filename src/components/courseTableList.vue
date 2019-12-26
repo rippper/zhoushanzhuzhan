@@ -13,7 +13,7 @@
             <tr v-for="(item, index) in listData" :key="index">
                 <th class="cm-lesson-content1">{{index + 1 + (currentPage-1) * row}}</th>
                 <th class="cm-lesson-content2">
-                    <router-link :to="{ path: '/courseDetail', query:{id: item.Id, mid: mid}}">
+                    <router-link :to="{ path: '/courseDetail', query:{id: item.Id, mid: mid}}" target="_blank">
                         {{item.Name}}
                     </router-link> 
                 </th>

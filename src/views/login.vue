@@ -54,7 +54,7 @@ export default {
             activeName: 'first',
             account: '',
             passWord: '',
-            remember: '',
+            remember: false,
             backUrl: '',
             backPath: ''
         }
@@ -129,6 +129,7 @@ export default {
                     localStorage.setItem('passWord', this.passWord)
                     setStore('remember', true)
                 } else {
+                    this.getUserInformation()
                     localStorage.setItem('account', '')
                     localStorage.setItem('passWord', '')
                     setStore('remember', true)

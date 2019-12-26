@@ -169,11 +169,6 @@ export default {
     url: API_URL + Course + '/CourseCategoryWithCourse',
     data: {}
   },
-  // 首页课程频道分类以及列表
-  ProductionInfoList: {
-    url: API_URL + Production + '/ProductionInfoList',
-    data: {}
-  },
   // 获取课程计划
   StudyPlanGet: {
     url: API_URL + Course + '/StudyPlanGet',
@@ -216,6 +211,16 @@ export default {
   // 获取课程笔记
   CourseNoteList: {
     url: API_URL + Course + '/CourseNoteList',
+    data: {}
+  },
+  // 获取展厅种类
+  ProductionCategoryInfoList: {
+    url: API_URL + Production + '/ProductionCategoryInfoList',
+    data: {}
+  },
+  // 获取展厅详情信息
+  ProductionInfoList: {
+    url: API_URL + Production + '/ProductionInfoList',
     data: {}
   },
   // 获取笔记信息

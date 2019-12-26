@@ -78,7 +78,7 @@
                                             <li class="clearfix" v-for="item in noteList" :key="item.Id">
                                                 <div class="title clearfix">
                                                     <div class="name l">
-                                                        用户:{{item.Name}}
+                                                        标题:{{item.Name}}
                                                     </div>
                                                     <div class="time r">
                                                         {{item.CreateDate|dateFilter3('yyyy-MM-dd')}}
@@ -172,7 +172,7 @@ import fetch from '../service/fetch'
 import { formatDate, rsaEnscrypt } from '../service/utils'
 import { Message } from 'element-ui'
 let ListDiv = Vue.extend({
-    template: '<ul class="urllist"><li v-for="(item,index) in data" @click="getQuaUrl(item,index)" :data-url="item.Url" :class="{active:item.Quality == 1}"><span v-if="item.Quality == 0">标清</span><span v-if="item.Quality == 1">高清</span><span v-if="item.Quality == 2">超清</span><span v-if="item.Quality == 3">1080</span></li></ul>',
+    template: '<ul class="urllist"><li v-for="(item,index) in data" @click="getQuaUrl(item,index)" :data-url="item.Url" :class="{active:item.Quality == 0}"><span v-if="item.Quality == 0">标清</span><span v-if="item.Quality == 1">高清</span><span v-if="item.Quality == 2">超清</span><span v-if="item.Quality == 3">1080</span></li></ul>',
     methods: {
         getQuaUrl (item, index) {
             this.$emit('getQua', item, index)
@@ -274,6 +274,7 @@ export default {
     methods: {
         async getVideo () {
             let response = await Play({ id: this.id })
+            console.log(response)
             if (response.Status == 200) {
                 this.allPlayInfo = response.Data
                 this.videoSrc = response.Data.PlayPage
@@ -291,6 +292,7 @@ export default {
                         this.playUrl.url = response.Data.PlayPage
                         this.playType = response.Data.PlayType
                         this.resultCourseDetail = response.Data.resultCourseDetail
+                        console.log(this.resultCourseDetail.Duration)
                         this.resultCourseNote = response.Data.resultCourseNote
                         this.browseScore = Number(response.Data.resultCourseDetail.BrowseScore)
                         this.valueStar = response.Data.resultCourseDetail.StudentGrade
@@ -391,7 +393,7 @@ export default {
                                 window.close()
                             }
                         } else if (data.Type == 1) {
-                            console.log(data.Type)
+                            //console.log(data.Type)
                         } else {
                             clearTimeout(timer)
                             document.body.innerHTML = ''
@@ -673,6 +675,7 @@ export default {
         },
         async getCourseComment () {
             let data = await CourseComment2({ id: this.id, page: 1, rows: 100, sort: 'Id', order: 'Desc' })
+            console.log(data)
             this.courseCommentList = data.Data.ListData
         },
         optionSelect (arr, item, index) {
@@ -718,7 +721,6 @@ export default {
             this.getVideo() 
         },
         async getCourseCommentAdd () {
-            // eslint-disable-next-line 
             let data = await CourseCommentAdd({
                 mainId: this.id,
                 parentId: 0,
@@ -727,8 +729,12 @@ export default {
                 __RequestVerificationToken: this.AntiForgeryToken
             })
             this.commentText = ''
-            Message('评论添加成功')
-            this.getCourseComment()
+            if (data.IsSuccess) {
+                Message('评论添加成功')
+                this.getCourseComment()
+            } else {
+                Message(data.Message)
+            }
         }
     },
     watch: {

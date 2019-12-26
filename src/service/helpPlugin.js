@@ -51,3 +51,29 @@ export const throttle = (fn, wait) => {
         fn.apply(this, args)
     }
 }
+/**
+ * deepClone
+ * @param {*} Origin 
+ * @param {*} Target 
+ */
+export const deepClone = (Origin, Target) => {
+    var target = Target || {}
+    var toStr = Object.prototype.toString
+    var arrStr = '[object Array]'
+    for (var prop in Origin) {
+        if (Origin.hasOwnProperty(prop)) {
+            if (Origin[prop] !== null && typeof(Origin[prop]) == 'object') {
+                if (toStr.call(Origin[prop]) == arrStr) {
+                    target[prop] = [];
+                } else {
+                    target[prop] = {};
+                }
+                target[prop] = (toStr.call(Origin[prop] == arrStr) ? [] : {});
+                deepClone(Origin[prop], target[prop])
+            } else {
+                target[prop] = Origin[prop]
+            }
+        }
+    }
+    return target;
+} 

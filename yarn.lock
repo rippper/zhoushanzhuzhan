@@ -6193,6 +6193,11 @@ pkg-dir@^4.1.0:
   dependencies:
     find-up "^4.0.0"
 
+plupload@^2.3.6:
+  version "2.3.6"
+  resolved "https://registry.npm.taobao.org/plupload/download/plupload-2.3.6.tgz#2608acf735d5e8db83248724d78d81757bb43866"
+  integrity sha1-Jgis9zXV6NuDJIck142BdXu0OGY=
+
 portfinder@^1.0.25:
   version "1.0.25"
   resolved "https://registry.npm.taobao.org/portfinder/download/portfinder-1.0.25.tgz#254fd337ffba869f4b9d37edc298059cb4d35eca"
@@ -8345,6 +8350,11 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.3.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-hot-reload-api%2Fdownload%2Fvue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha1-UylVzB6yCKPZkLOp+acFdGV+CPI=
+
+vue-jsonp@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.npm.taobao.org/vue-jsonp/download/vue-jsonp-0.1.8.tgz#2cec054b0aca5a9c7de0146b16b2acbeec2d73a7"
+  integrity sha1-LOwFSwrKWpx94BRrFrKsvuwtc6c=
 
 vue-loader@^15.7.2:
   version "15.7.2"

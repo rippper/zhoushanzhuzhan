@@ -14,6 +14,9 @@ import PersonalCollect from '../views/PersonalCollect.vue'
 import PersonalColCourse from '../views/PersonalColCourse.vue'
 import PersonalColNews from '../views/PersonalColNews.vue'
 import PersonalNote from '../views/PersonalNote.vue'
+import ElcResIndex from '../views/ElcResIndex.vue'
+import ElcBookList from '../views/ElcBookList.vue'
+import OnlineShow from '../views/OnlineShow.vue'
 Vue.use(VueRouter)
 
 /**
@@ -66,6 +69,24 @@ const routes = [
     name: 'newsdetail',
     meta: { title: '新闻详情' },
     component: NewsDetail
+  },
+  {
+    path: '/elcresindex',
+    name: 'elcresindex',
+    meta: { title: '电子资源', isSkip: true },
+    component: ElcResIndex
+  },
+  {
+    path: '/elcbooklist',
+    name: 'elcbooklist',
+    meta: { title: '电子书' },
+    component: ElcBookList
+  },
+  {
+    path: '/onlineshow',
+    name: 'onlineshow',
+    meta: { title: '网上展厅' },
+    component: OnlineShow
   },
   {
     path: '/personalcenter',

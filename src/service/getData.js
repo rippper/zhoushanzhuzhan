@@ -157,6 +157,11 @@ export const CourseCategoryWithCourse = (data) => fetch.post(Api.CourseCategoryW
 export const ProductionInfoList = (data) => fetch.post(Api.ProductionInfoList.url,
   { ...Api.ProductionInfoList.data, ...data })
 /**
+ * 
+ */
+export const ProductionCategoryInfoList = (data) => fetch.post(Api.ProductionCategoryInfoList.url,
+  { ...Api.ProductionCategoryInfoList.data, ...data })
+/**
  * 获取课程计划
  */
 export const StudyPlanGet = (data) => fetch.post(Api.StudyPlanGet.url,

@@ -6,7 +6,7 @@
                     <div class="lb2-right-hd clearfix">
                         <div class="lb2-right-hd1 ">
                             <p class="lb2-right-hd1-p1" :title="item.Name">
-                                <router-link :to="{ path: '/courseDetail', query:{id: item.Id}}">
+                                <router-link :to="{ path: '/courseDetail', query:{id: item.Id}}" target="_blank">
                                     {{item.Name}}
                                 </router-link> 
                             </p>
@@ -19,7 +19,7 @@
                                 <img src="../assets/eye-1.png"> {{item.ClickCount}}
                             </div>
                             <div class="link r">
-                                <router-link :to="{ path: '/courseDetail', query:{id: item.Id}}">
+                                <router-link :to="{ path: '/courseDetail', query:{id: item.Id}}" target="_blank">
                                     查看详情
                                 </router-link> 
                             </div>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="lb2-right l">
-                    <router-link :to="{ path: '/courseDetail', query:{id: item.Id}}">
+                    <router-link :to="{ path: '/courseDetail', query:{ id: item.Id } }" target="_blank">
                        <error-image :src="item.Img"></error-image>
                     </router-link> 
                 </div>

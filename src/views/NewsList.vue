@@ -42,6 +42,7 @@
                     </div>
                     <el-pagination
                         background
+                        :current-page.sync="currentPage"
                         :page-size="this.rows"
                         @current-change="handleCurrentChange"
                         layout="prev, pager, next"
@@ -133,8 +134,8 @@ export default {
         goMenuList (item, menu) {
             // console.log(item, menu)
             // this.$set(item,'isClick', true)
+            this.currentPage = 1
             this.$router.push({ path: '/newslist', query: { Id: item.Id } })
-
             item.isClick = true
         },
         getArticleChannelInfoList () {
@@ -171,6 +172,7 @@ export default {
     },
     watch: {
         $route (value) {
+            this.currentPage = 1
             this.articleList = []
             if (this.$route.query.keyWords && !this.$route.query.Id){
                 this.keyword = this.$route.query.keyWords
@@ -180,16 +182,11 @@ export default {
             } else if (!this.$route.query.keyWords && this.$route.query.Id) {
                 this.CategoryId = this.$route.query.Id
                 this.keyword = ''
-                this.page = 1
                 this.getArticleInfoList()
-                console.log(this.menuData)
-                console.log(this.CategoryId)
                 this.menuData.forEach((itemS) => {
                     if (itemS.Id != this.CategoryId) {
-                        console.log(111)
                         itemS.isClick = false
                     } else {
-                        console.log(222)
                         itemS.isClick = true
                     }  
                 })

@@ -8,13 +8,16 @@ import ElementUI, { MessageBox } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Axios from 'axios'
 import Api from './service/api'
+import VueJsonp from 'vue-jsonp'
 import { Authorization } from './service/getData'
 import VueFilter from './filters'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+
 Vue.use(ElementUI)
 Vue.use(VueFilter)
 Vue.use(VueAwesomeSwiper)
+Vue.use(VueJsonp)
 Vue.config.productionTip = false
 
 const getLoginStatus = (currentUrl) => {

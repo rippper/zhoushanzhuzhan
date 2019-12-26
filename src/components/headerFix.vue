@@ -121,10 +121,10 @@
             <a href="http://www.zsxxnet.cn/jtjy/jtjy.aspx">家庭教育</a>
           </li>
           <li>
-            <a href="http://www.zsxxnet.cn/elelib/tipmessage.aspx">电子资源</a>
+            <router-link to="/elcresindex">电子资源</router-link>
           </li>
           <li>
-            <a href="http://www.zsxxnet.cn/hall/Pro_More.aspx">网上展厅</a>
+            <router-link to="/onlineshow">网上展厅</router-link>
             <ul>
               <li>
                 <a href="http://www.zsxxnet.cn/hall/Pro_More.aspx?TypeId=3">摄影作品展</a>

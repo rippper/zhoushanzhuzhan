@@ -95,6 +95,7 @@
                     </div>
                     <el-pagination
                         background
+                        :current-page.sync="currentPage"
                         :page-size="this.rows"
                         @current-change="handleCurrentChange"
                         layout="prev, pager, next"
@@ -237,20 +238,19 @@ export default {
     watch: {
         $route (value) {
             if (!this.$route.query.title && !this.$route.query.keyWords) {
-                console.log(111)
                 this.channelId = 0
                 this.ctitle = ''
                 this.channelList = []
                 this.videoList = []
                 this.getCourseChannel()
-                this.page = 1
+                this.currentPage = 1
                 return false
             } else if (!this.$route.query.title && this.$route.query.keyWords){
                 this.keyWords = this.$route.query.keyWords
                 this.videoList = []
                 this.ctitle = ''
                 this.channelId = 0
-                this.page = 1
+                this.currentPage = 1
                 this.channelList.forEach((itemf) => {
                     itemf.state = closed
                     let itemChildren = itemf.children || []
@@ -263,7 +263,7 @@ export default {
                 this.keyWords = ''
                 this.ctitle = this.$route.query.title
                 this.videoList = []
-                this.page = 1
+                this.currentPage = 1
                 let Obj = null
                 this.channelList.forEach(item => {
                     if (item.text == this.ctitle) {

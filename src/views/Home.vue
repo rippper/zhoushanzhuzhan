@@ -42,7 +42,7 @@
                 <ul>
                   <li class="content_item" v-for="(item, index) in socialNews" :key="index" v-show="msgBoxType == 0">
                     <router-link :to="{ path: '/newsdetail', query: { id: item.ArticleId, mid: item.ArticleChannel } }">
-                      <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
+                      <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(21)}}</span>
                       <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
                     </router-link>
                   </li>
@@ -52,7 +52,7 @@
                 <ul>
                   <li class="content_item" v-for="(item, index) in notifiy" :key="index" v-show="msgBoxType == 1">
                     <router-link :to="{ path: '/newsdetail', query: { id: item.ArticleId, mid: item.ArticleChannel } }">
-                      <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(23)}}</span>
+                      <span class="ct_left" :title="item.ArticleTitle">{{item.ArticleTitle | wordLimit(21)}}</span>
                       <span class="ct_right">{{item.ArticleCreateDate | dateFilter("yyyy-MM-dd")}}</span>
                     </router-link>
                   </li>
@@ -275,10 +275,10 @@
         <div class="home_socityfamily_content">
           <ul>
             <li v-for="(item, index) in socityFamily" :key="index">
-              <a :href="`http://www.zsxxnet.cn/artical/detail.aspx?articleid=${item.ArticleId}`">
+              <router-link :to="{ path: '/newsdetail', query: { id: item.ArticleId, mid: item.ArticleChannel } }">
                 <error-Image :src="item.ArticleImg"></error-Image>
                 <p>{{item.ArticleTitle | wordLimit(9)}}</p>
-              </a>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -593,6 +593,7 @@ export default {
         Order: 'desc',
         Rows: 7
       })
+      console.log(data)
       if (data.IsSuccess) {
         this.socityFamily = data.Data.List
       }

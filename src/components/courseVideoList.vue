@@ -37,7 +37,11 @@ export default {
     },
     methods: {
        goDetail (Id) {
-           this.$router.push({ path: '/coursedetail', query: { id: Id } })
+           const { href } = this.$router.resolve({ 
+               path: '/coursedetail',
+               query: { id: Id }
+            })
+            window.open(href, "_blank")
        }
     },
     components: {
